@@ -23143,8 +23143,10 @@
 	  value: true
 	});
 	exports.default = reducer;
+	
+	
 	var defaultState = {
-	  series: [{}]
+	  series: []
 	};
 	
 	function reducer() {
