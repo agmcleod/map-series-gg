@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import routes from '../routes';
 
 export default class App extends React.Component {
   static displayName = 'App';
@@ -8,7 +9,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className='container'>
-        <h1>Hello</h1>
+        {routes}
       </div>
     );
   }
