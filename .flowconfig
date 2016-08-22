@@ -8,8 +8,10 @@
 [include]
 
 [libs]
+flow-typed/npm/
 
 [options]
 module.system=node
 module.name_mapper='\(redux\)' -> '\1/src/index'
+module.name_mapper='.*\(.css\)' -> 'empty/object'
 esproposal.class_static_fields=enable

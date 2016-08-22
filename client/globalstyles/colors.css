@@ -1,0 +1,41 @@
+.colorTeal0 { color: #226666 }	/* Main teal color */
+.colorTeal1 { color: #669999 }
+.colorTeal2 { color: #407F7F }
+.colorTeal3 { color: #0D4D4D }
+.colorTeal4 { color: #003333 }
+
+.colorBlue0 { color: #2E4272 }	/* Main green color (1) */
+.colorBlue1 { color: #7887AB }
+.colorBlue2 { color: #4F628E }
+.colorBlue3 { color: #162955 }
+.colorBlue4 { color: #061539 }
+
+.colorGreen0 { color: #2D882D }	/* Main green color (2) */
+.colorGreen1 { color: #88CC88 }
+.colorGreen2 { color: #55AA55 }
+.colorGreen3 { color: #116611 }
+.colorGreen4 { color: #004400 }
+
+.bgTeal0 { background-color: #226666 }	/* Main teal color */
+.bgTeal1 { background-color: #669999 }
+.bgTeal2 { background-color: #407F7F }
+.bgTeal3 { background-color: #0D4D4D }
+.bgTeal4 { background-color: #003333 }
+
+.bgBlue0 { background-color: #2E4272 }	/* Main green color (1) */
+.bgBlue1 { background-color: #7887AB }
+.bgBlue2 { background-color: #4F628E }
+.bgBlue3 { background-color: #162955 }
+.bgBlue4 { background-color: #061539 }
+
+.bgGreen0 { background-color: #2D882D }	/* Main green color (2) */
+.bgGreen1 { background-color: #88CC88 }
+.bgGreen2 { background-color: #55AA55 }
+.bgGreen3 { background-color: #116611 }
+.bgGreen4 { background-color: #004400 }
+
+.bgGreen0Hover:hover { background-color: #2D882D }
+.bgGreen1Hover:hover { background-color: #88CC88 }
+.bgGreen2Hover:hover { background-color: #55AA55 }
+.bgGreen3Hover:hover { background-color: #116611 }
+.bgGreen4Hover:hover { background-color: #004400 }

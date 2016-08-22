@@ -1,0 +1,14 @@
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.newPanel, .listPanel {
+  display: flex;
+  flex: 1;
+  padding: 4%;
+}
+
+.newPanel {
+  border-right: 1px solid black;
+}

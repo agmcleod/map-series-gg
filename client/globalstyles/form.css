@@ -1,0 +1,20 @@
+.fieldGroup {
+  margin: 10px 0;
+  label {
+    margin-right: 5px;
+  }
+}
+
+.textField {
+  height: 20px;
+}
+
+.submit {
+  border: 0;
+  composes: bgGreen2 from './colors.css' bgGreen1Hover from './colors.css';
+  font-size: 1.2em;
+  padding: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}

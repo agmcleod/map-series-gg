@@ -1,0 +1,108 @@
+.styles__content___VOxq0 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.styles__newPanel___1hbAn, .styles__listPanel___qszkk {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 4%;
+}
+
+.styles__newPanel___1hbAn {
+  border-right: 1px solid black;
+}
+.new_series_styles__textarea___3kFda {
+  height: 300px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.new_series_styles__fieldset___1e3gY {
+  border: 0;
+  padding: 0;
+}
+.colors__colorTeal0___2naKh { color: #226666 }	/* Main teal color */
+.colors__colorTeal1___311Zm { color: #669999 }
+.colors__colorTeal2___1ajwm { color: #407F7F }
+.colors__colorTeal3___34YYA { color: #0D4D4D }
+.colors__colorTeal4___3hDD0 { color: #003333 }
+
+.colors__colorBlue0___2PjUH { color: #2E4272 }	/* Main green color (1) */
+.colors__colorBlue1___1tvAY { color: #7887AB }
+.colors__colorBlue2___19m8o { color: #4F628E }
+.colors__colorBlue3___2KbHv { color: #162955 }
+.colors__colorBlue4___24XOR { color: #061539 }
+
+.colors__colorGreen0___2Qs1V { color: #2D882D }	/* Main green color (2) */
+.colors__colorGreen1___2wRh- { color: #88CC88 }
+.colors__colorGreen2___3iRUI { color: #55AA55 }
+.colors__colorGreen3___2lEXl { color: #116611 }
+.colors__colorGreen4___2Xlix { color: #004400 }
+
+.colors__bgTeal0___3Q_Ik { background-color: #226666 }	/* Main teal color */
+.colors__bgTeal1___2fIN3 { background-color: #669999 }
+.colors__bgTeal2___5VkDM { background-color: #407F7F }
+.colors__bgTeal3___eC4Dm { background-color: #0D4D4D }
+.colors__bgTeal4___37gF3 { background-color: #003333 }
+
+.colors__bgBlue0___15H0U { background-color: #2E4272 }	/* Main green color (1) */
+.colors__bgBlue1___2f4oj { background-color: #7887AB }
+.colors__bgBlue2___2QL6p { background-color: #4F628E }
+.colors__bgBlue3___3eJ-p { background-color: #162955 }
+.colors__bgBlue4___YMDSX { background-color: #061539 }
+
+.colors__bgGreen0___1DoWh { background-color: #2D882D }	/* Main green color (2) */
+.colors__bgGreen1___353T5 { background-color: #88CC88 }
+.colors__bgGreen2___16DzY { background-color: #55AA55 }
+.colors__bgGreen3___KhCT3 { background-color: #116611 }
+.colors__bgGreen4___9IgjZ { background-color: #004400 }
+
+.colors__bgGreen0Hover___2DSSY:hover { background-color: #2D882D }
+.colors__bgGreen1Hover___2UdHo:hover { background-color: #88CC88 }
+.colors__bgGreen2Hover___3i8MK:hover { background-color: #55AA55 }
+.colors__bgGreen3Hover___36uwP:hover { background-color: #116611 }
+.colors__bgGreen4Hover___2AV1Y:hover { background-color: #004400 }
+.form__fieldGroup___qujoq {
+  margin: 10px 0;
+}
+
+.form__fieldGroup___qujoq label {
+  margin-right: 5px;
+}
+
+.form__textField___3K40_ {
+  height: 20px;
+}
+
+.form__submit___1UdYs {
+  border: 0;
+  font-size: 1.2em;
+  padding: 10px;
+}
+
+.form__submit___1UdYs:hover {
+  cursor: pointer;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.app__container___16B9o {
+  max-width: 1000px;
+  margin:0 auto;
+  width:100%;
+}
+
+/*# sourceMappingURL=style.css.map*/

@@ -1,0 +1,10 @@
+.textarea {
+  height: 300px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.fieldset {
+  border: 0;
+  padding: 0;
+}
