@@ -21,6 +21,13 @@
 .styles__newPanel___1hbAn {
   border-right: 1px solid black;
 }
+
+.styles__listPanel___qszkk {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
 .new_series_styles__textarea___3kFda {
   height: 300px;
   width: 100%;

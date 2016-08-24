@@ -12,3 +12,7 @@
 .newPanel {
   border-right: 1px solid black;
 }
+
+.listPanel {
+  flex-direction: column;
+}

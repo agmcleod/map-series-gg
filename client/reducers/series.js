@@ -41,7 +41,12 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
-      return Object.assign({}, state, { series: action.data, isFetching: false });
+      const seriesMap = {};
+      for (let i = 0; i < action.data.length; i++) {
+        const row = action.data[i].doc;
+        seriesMap[row._id] = row;
+      }
+      return Object.assign({}, state, { series: seriesMap, isFetching: false });
   }
   return state;
 }
@@ -50,7 +55,6 @@ export function listSeries() {
   return (dispatch: Dispatch) => {
     dispatch({ type: LOADING });
     return db.query(`${index_name}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
-      console.log(res.rows);
       dispatch({ type: LIST_SERIES, data: res.rows });
     });
   };
