@@ -6,10 +6,9 @@ import formStyles from '../../globalstyles/form.css';
 
 import { connect } from 'react-redux';
 import { newSeries } from '../../reducers/series';
-import type { Series } from '../../reducers/series';
 
 type Props = {
-  newSeries: (Series)
+  newSeries: (series: Object) => void;
 };
 
 class NewSeries extends React.Component {
@@ -32,6 +31,8 @@ class NewSeries extends React.Component {
     seriesMaps: string;
   }
 
+  props: Props;
+
   _createSeries(e) {
     e.preventDefault();
 
@@ -42,8 +43,6 @@ class NewSeries extends React.Component {
         name,
         seriesMaps: seriesMaps.split(/\r\n|\n/)
       };
-
-      console.log(data);
 
       this.props.newSeries(data);
       this.setState({ name: '', seriesMaps: '' });

@@ -34,6 +34,7 @@ const NEW_SERIES = 'NEW_SERIES';
 const LIST_SERIES = 'LIST_SERIES';
 
 export default function reducer(state: SeriesState = defaultState, action: Action) {
+  const seriesMap = {};
   switch (action.type) {
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
@@ -41,7 +42,6 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
-      const seriesMap = {};
       for (let i = 0; i < action.data.length; i++) {
         const row = action.data[i].doc;
         seriesMap[row._id] = row;
