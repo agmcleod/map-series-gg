@@ -2,7 +2,7 @@
 
 import uuid from 'node-uuid';
 import type { Action, Dispatch } from 'redux';
-import db from '../db';
+import db, { index_name } from '../db';
 
 export type GameMap = {
   vetoed: string,
@@ -12,8 +12,9 @@ export type GameMap = {
 };
 
 export type Series = {
-  id: string,
+  _id: string,
   name: string,
+  resource: string,
   orderSet: boolean,
   maps: Array<GameMap>
 };
@@ -37,19 +38,30 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
     case NEW_SERIES:
-      state.series = Object.assign({}, state.series, { [action.data.id]: action.data });
+      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
-      return state;
+      return Object.assign({}, state, { series: action.data, isFetching: false });
   }
   return state;
+}
+
+export function listSeries() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: LOADING });
+    return db.query(`${index_name}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
+      console.log(res.rows);
+      dispatch({ type: LIST_SERIES, data: res.rows });
+    });
+  };
 }
 
 export function newSeries(data: Series) {
   return (dispatch: Dispatch) => {
     dispatch({ type: LOADING });
-    data.id = uuid.v1();
-    db.put(data).then(() => {
+    data._id = uuid.v1();
+    data.resource = 'series';
+    return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
     }).catch((err) => console.log(err));
   };

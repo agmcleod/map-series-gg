@@ -150,3 +150,5 @@ ecmaFeatures:
   templateStrings: true # enable template strings
 plugins:
   - react
+globals:
+  emit: true

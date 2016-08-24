@@ -4,20 +4,30 @@ import _ from 'lodash';
 import React from 'react';
 import styles from './styles.css';
 import NewSeries from '../new_series/new_series';
-import type { Series } from '../../reducers/series';
+import type { Series, SeriesState } from '../../reducers/series';
+
+import { listSeries } from '../../reducers/series';
+import { connect } from 'react-redux';
 
 type Props = {
-  series: { [id:string]:Series }
+  listSeries: () => void,
+  series: { [id:string]:Series },
+  isFetching: boolean
 }
 
-export default class SeriesList extends React.Component {
+class SeriesList extends React.Component {
   static displayName = 'SeriesList';
   static defaultProps = {
-    series: {}
+    series: {},
+    isFetching: false
   };
 
   constructor(props: Props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.props.listSeries();
   }
 
   render() {
@@ -31,8 +41,8 @@ export default class SeriesList extends React.Component {
           <div className={styles.listPanel}>
             <h2>View Existing Series</h2>
             <ul>
-              {_.map(this.props.series, (id: number, series: Series) => {
-                return <li key={`series_${id}`}>{series.name}</li>;
+              {_.map(this.props.series, (_id: number, series: Series) => {
+                return <li key={`series_${_id}`}>{series.name}</li>;
               })}
             </ul>
           </div>
@@ -41,3 +51,5 @@ export default class SeriesList extends React.Component {
     );
   }
 }
+
+export default connect((state: SeriesState) => state, { listSeries })(SeriesList);
