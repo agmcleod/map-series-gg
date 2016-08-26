@@ -9,6 +9,8 @@ import type { Series } from '../../reducers/series';
 import { listSeries } from '../../reducers/series';
 import { connect } from 'react-redux';
 
+import { Link } from 'react-router';
+
 type Props = {
   listSeries: () => void,
   series: { [id:string]:Series },
@@ -42,7 +44,7 @@ class SeriesList extends React.Component {
             <h2>View Existing Series</h2>
             <ul>
               {_.map(this.props.series, (series: Series, _id: string) => {
-                return <li key={`series_${_id}`}>{series.name}</li>;
+                return <li key={`series_${_id}`}><Link to={`/series/${series._id}`}>{series.name}</Link></li>;
               })}
             </ul>
           </div>
@@ -53,5 +55,5 @@ class SeriesList extends React.Component {
 }
 
 export default connect((state) => {
-  return { series: state.seriesReducer.series };
+  return { series: state.seriesReducer.series, isFetching: state.seriesReducer.isFetching };
 }, { listSeries })(SeriesList);

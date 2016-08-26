@@ -16,7 +16,7 @@ export type Series = {
   name: string,
   resource: string,
   orderSet: boolean,
-  maps: Array<GameMap>
+  seriesMaps: Array<GameMap>
 };
 
 export type SeriesState = {
@@ -60,11 +60,21 @@ export function listSeries() {
   };
 }
 
-export function newSeries(data: Series) {
+export function newSeries(data: Object) {
   return (dispatch: Dispatch) => {
     dispatch({ type: LOADING });
     data._id = uuid.v1();
     data.resource = 'series';
+    const seriesMaps = data.seriesMaps.map((mapName): GameMap => {
+      return {
+        vetoed: '',
+        order: 0,
+        name: mapName,
+        played: false
+      };
+    });
+
+    data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
     }).catch((err) => console.log(err));

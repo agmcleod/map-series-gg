@@ -19,9 +19,7 @@ db.put(ddoc).catch(function (err) {
   // view doc already created
   if (err.name !== 'conflict') {
     throw err;
-  } else {
-    console.log('index already found');
   }
-}).then(() => console.log('index created'));
+});
 
 export default db;

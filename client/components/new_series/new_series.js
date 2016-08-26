@@ -8,10 +8,17 @@ import { connect } from 'react-redux';
 import { newSeries } from '../../reducers/series';
 
 type Props = {
-  newSeries: (series: Object) => void;
+  newSeries: (data: Object) => void
 };
 
 class NewSeries extends React.Component {
+
+  props: Props;
+
+  state: {
+    name: string;
+    seriesMaps: string;
+  }
 
   static displayName = 'NewSeries';
 
@@ -25,13 +32,6 @@ class NewSeries extends React.Component {
     // some gross flow workaround needed for rebinding method
     (this:any)._createSeries = this._createSeries.bind(this);
   }
-
-  state: {
-    name: string;
-    seriesMaps: string;
-  }
-
-  props: Props;
 
   _createSeries(e) {
     e.preventDefault();
