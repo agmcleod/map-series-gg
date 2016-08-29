@@ -89,6 +89,7 @@
 
 .form__textField___3K40_ {
   height: 20px;
+  border: 1px solid #ddd;
 }
 
 .form__submit___1UdYs {
@@ -99,6 +100,43 @@
 
 .form__submit___1UdYs:hover {
   cursor: pointer;
+}
+.view_series_styles__list___1_Kp6 {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.view_series_styles__listItemBase___3dPp4 {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border:1px solid #777;
+}
+
+.view_series_styles__grayedOut___aRbPU {
+  background: #ddd;
+  border:1px dashed #777;
+  color: #888;
+}
+
+.view_series_styles__chosen___1B7w9 {
+  background: #69E06B;
+  border:1px dashed #050;
+  color: #080;
+}
+
+.view_series_styles__disabled___bwv0y {
+  background: #eee;
 }
 body {
   margin: 0;

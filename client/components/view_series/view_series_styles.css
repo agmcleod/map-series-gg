@@ -1,0 +1,30 @@
+.list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+}
+
+.listItemBase {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border:1px solid #777;
+}
+
+.grayedOut {
+  background: #ddd;
+  border:1px dashed #777;
+  color: #888;
+}
+
+.chosen {
+  background: #69E06B;
+  border:1px dashed #050;
+  color: #080;
+}
+
+.disabled {
+  background: #eee;
+}

@@ -16,7 +16,8 @@ export type Series = {
   name: string,
   resource: string,
   orderSet: boolean,
-  seriesMaps: Array<GameMap>
+  seriesMaps: Array<GameMap>,
+  bestOf: ?number
 };
 
 export type SeriesState = {
