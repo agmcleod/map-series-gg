@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import type { Series } from '../../reducers/series';
-import { listSeries } from '../../reducers/series';
+import { listSeries, saveSeries } from '../../reducers/series';
 import styles from './view_series_styles.css';
 import classNames from 'classnames';
 import { Link } from 'react-router';
@@ -15,6 +15,7 @@ type Props = {
   listSeries: () => void,
   isFetching: boolean,
   series: { [id:string]:Series },
+  saveSeries: (data: Series) => void,
   params: Params
 }
 
@@ -32,6 +33,7 @@ class ViewSeries extends React.Component {
     super(props);
 
     this._onFieldChange = this._onFieldChange.bind(this);
+    this._onSave = this._onSave.bind(this);
 
     let seriesMaps = [];
     const series = this.props.series[this.props.params.id];
@@ -68,6 +70,15 @@ class ViewSeries extends React.Component {
     this.setState({ seriesMaps });
   }
 
+  _onSave() {
+    const series = this.props.series[this.props.params.id];
+
+    series.seriesMaps = this.state.seriesMaps;
+    series.bestOf = this.state.bestOf;
+
+    this.props.saveSeries(series);
+  }
+
   _renderBestOf() {
     const bestOf = [];
     const numOfMaps = this.state.seriesMaps.length;
@@ -94,6 +105,20 @@ class ViewSeries extends React.Component {
             return <option key={i} value={count}>Best of {count}</option>;
           })}
         </select>
+      );
+    }
+
+    return null;
+  }
+
+  _renderItemInput(i, chosen) {
+    if (!chosen) {
+      return (
+        <input
+          className={formStyle.textField}
+          type='text'
+          placeholder='Who Vetod?'
+          onChange={(e) => this._onFieldChange(e, i, 'vetoed')} />
       );
     }
 
@@ -131,16 +156,13 @@ class ViewSeries extends React.Component {
             return (
               <li key={i} className={classes}>
                 {map.name}
-                <input
-                  className={classNames(formStyle.textField, { [styles.disabled]: chosen })}
-                  type='text'
-                  placeholder='Who Vetod?'
-                  onChange={(e) => this._onFieldChange(e, i, 'vetoed')}
-                  disabled={chosen} />
+                {this._renderItemInput(i, chosen)}
               </li>
             );
           })}
         </ul>
+
+        <button type='button' onClick={this._onSave}>Save</button>
       </div>
     );
   }
@@ -148,4 +170,4 @@ class ViewSeries extends React.Component {
 
 export default connect((state) => {
   return { series: state.seriesReducer.series, isFetching: state.seriesReducer.isFetching };
-}, { listSeries })(ViewSeries);
+}, { listSeries, saveSeries })(ViewSeries);

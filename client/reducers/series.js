@@ -33,12 +33,14 @@ const defaultState: SeriesState = {
 const LOADING = 'LOADING';
 const NEW_SERIES = 'NEW_SERIES';
 const LIST_SERIES = 'LIST_SERIES';
+const SAVE_SERIES = 'SAVE_SERIES';
 
 export default function reducer(state: SeriesState = defaultState, action: Action) {
   const seriesMap = {};
   switch (action.type) {
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
+    case SAVE_SERIES:
     case NEW_SERIES:
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
@@ -78,6 +80,15 @@ export function newSeries(data: Object) {
     data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
+    }).catch((err) => console.log(err));
+  };
+}
+
+export function saveSeries(data: Series) {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: LOADING });
+    return db.put(data).then(() => {
+      dispatch({ type: SAVE_SERIES, data });
     }).catch((err) => console.log(err));
   };
 }
