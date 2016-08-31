@@ -35,17 +35,7 @@ class ViewSeries extends React.Component {
     this._onFieldChange = this._onFieldChange.bind(this);
     this._onSave = this._onSave.bind(this);
 
-    let seriesMaps = [];
-    const series = this.props.series[this.props.params.id];
-
-    let bestOf = 1;
-    if (series) {
-      seriesMaps = series.seriesMaps;
-      if (series.bestOf) {
-        bestOf = series.bestOf;
-      }
-    }
-    this.state = { seriesMaps, bestOf };
+    this.state = this.getStateFromProps(this.props);
   }
 
   componentDidMount() {
@@ -53,11 +43,22 @@ class ViewSeries extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const series = nextProps.series[nextProps.params.id];
+    this.setState(this.getStateFromProps(nextProps));
+  }
 
+  getStateFromProps(props) {
+    const series = props.series[props.params.id];
+
+    let bestOf = 1;
+    let seriesMaps = [];
     if (series) {
-      this.setState({ seriesMaps: series.seriesMaps });
+      seriesMaps = series.seriesMaps;
+      if (series.bestOf) {
+        bestOf = series.bestOf;
+      }
     }
+
+    return { seriesMaps, bestOf };
   }
 
   _onBestOfChange(e) {
@@ -102,7 +103,11 @@ class ViewSeries extends React.Component {
       return (
         <select onChange={(e) => this._onBestOfChange(e)}>
           {bestOf.map((count, i) => {
-            return <option key={i} value={count}>Best of {count}</option>;
+            return (
+              <option key={i} value={count} selected={count === this.state.bestOf}>
+                Best of {count}
+              </option>
+            );
           })}
         </select>
       );
