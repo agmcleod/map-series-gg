@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import type { Series } from '../../reducers/series';
-import { listSeries, saveSeries } from '../../reducers/series';
+import { listSeries, saveSeries, unsetSucceeded } from '../../reducers/series';
 import styles from './view_series_styles.css';
 import classNames from 'classnames';
 import { Link } from 'react-router';
@@ -16,6 +16,8 @@ type Props = {
   isFetching: boolean,
   series: { [id:string]:Series },
   saveSeries: (data: Series) => void,
+  succeeded: boolean,
+  unsetSucceeded: (data: Series) => void,
   params: Params
 }
 
@@ -46,6 +48,12 @@ class ViewSeries extends React.Component {
     this.setState(this.getStateFromProps(nextProps));
   }
 
+  componentWillUnmount() {
+    if (this.state.succeeded) {
+      this.props.unsetSucceeded();
+    }
+  }
+
   getStateFromProps(props) {
     const series = props.series[props.params.id];
 
@@ -58,7 +66,7 @@ class ViewSeries extends React.Component {
       }
     }
 
-    return { seriesMaps, bestOf };
+    return { seriesMaps, bestOf, succeeded: props.succeeded };
   }
 
   _onBestOfChange(e) {
@@ -101,10 +109,10 @@ class ViewSeries extends React.Component {
 
     if (bestOf.length > 0) {
       return (
-        <select onChange={(e) => this._onBestOfChange(e)}>
+        <select onChange={(e) => this._onBestOfChange(e)} defaultValue={this.state.bestOf}>
           {bestOf.map((count, i) => {
             return (
-              <option key={i} value={count} selected={count === this.state.bestOf}>
+              <option key={i} value={count}>
                 Best of {count}
               </option>
             );
@@ -116,18 +124,24 @@ class ViewSeries extends React.Component {
     return null;
   }
 
-  _renderItemInput(i, chosen) {
-    if (!chosen) {
-      return (
-        <input
-          className={formStyle.textField}
-          type='text'
-          placeholder='Who Vetod?'
-          onChange={(e) => this._onFieldChange(e, i, 'vetoed')} />
-      );
-    }
+  _renderItemInput(i, vetoed) {
+    return (
+      <input
+        className={formStyle.textField}
+        type='text'
+        placeholder='Who Vetod?'
+        onChange={(e) => this._onFieldChange(e, i, 'vetoed')}
+        value={vetoed} />
+    );
+  }
 
-    return null;
+  _renderSuccededNotice() {
+    return (
+      <div className={styles.succeded}>
+        <p>Series saved successfully</p>
+        <button type='button' className={styles.close} onClick={this.props.unsetSucceeded}>Close</button>
+      </div>
+    );
   }
 
   render() {
@@ -148,6 +162,7 @@ class ViewSeries extends React.Component {
 
     return (
       <div>
+        {this.state.succeeded ? this._renderSuccededNotice() : null}
         <h1>{series.name}</h1>
         <p><Link to='/'>Back</Link></p>
         {this._renderBestOf()}
@@ -161,7 +176,7 @@ class ViewSeries extends React.Component {
             return (
               <li key={i} className={classes}>
                 {map.name}
-                {this._renderItemInput(i, chosen)}
+                {chosen ? null : this._renderItemInput(i, map.vetoed)}
               </li>
             );
           })}
@@ -174,5 +189,9 @@ class ViewSeries extends React.Component {
 }
 
 export default connect((state) => {
-  return { series: state.seriesReducer.series, isFetching: state.seriesReducer.isFetching };
-}, { listSeries, saveSeries })(ViewSeries);
+  return {
+    series: state.seriesReducer.series,
+    isFetching: state.seriesReducer.isFetching,
+    succeeded: state.seriesReducer.succeeded
+  };
+}, { listSeries, saveSeries, unsetSucceeded })(ViewSeries);

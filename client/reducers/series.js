@@ -13,6 +13,7 @@ export type GameMap = {
 
 export type Series = {
   _id: string,
+  _rev: string,
   name: string,
   resource: string,
   orderSet: boolean,
@@ -22,18 +23,21 @@ export type Series = {
 
 export type SeriesState = {
   series: { [id:string]: Series },
-  isFetching: boolean
+  isFetching: boolean,
+  succeeded: boolean
 }
 
 const defaultState: SeriesState = {
   series: {},
-  isFetching: false
+  isFetching: false,
+  succeeded: false
 };
 
 const LOADING = 'LOADING';
 const NEW_SERIES = 'NEW_SERIES';
 const LIST_SERIES = 'LIST_SERIES';
 const SAVE_SERIES = 'SAVE_SERIES';
+const UNSET_SUCCEEDED = 'UNSET_SUCCEEDED';
 
 export default function reducer(state: SeriesState = defaultState, action: Action) {
   const seriesMap = {};
@@ -41,6 +45,8 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
     case SAVE_SERIES:
+      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
+      return Object.assign({}, state, { isFetching: false, succeeded: true });
     case NEW_SERIES:
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
@@ -50,6 +56,8 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
         seriesMap[row._id] = row;
       }
       return Object.assign({}, state, { series: seriesMap, isFetching: false });
+    case UNSET_SUCCEEDED:
+      return Object.assign({}, state, { succeeded: false });
   }
   return state;
 }
@@ -80,15 +88,22 @@ export function newSeries(data: Object) {
     data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
-    }).catch((err) => console.log(err));
+    }).catch((err) => console.error(err));
   };
 }
 
 export function saveSeries(data: Series) {
   return (dispatch: Dispatch) => {
     dispatch({ type: LOADING });
-    return db.put(data).then(() => {
+    return db.put(data).then((res) => {
+      data._rev = res._rev;
       dispatch({ type: SAVE_SERIES, data });
-    }).catch((err) => console.log(err));
+    }).catch((err) => console.error(err));
+  };
+}
+
+export function unsetSucceeded() {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: UNSET_SUCCEEDED });
   };
 }

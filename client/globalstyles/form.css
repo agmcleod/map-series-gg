@@ -15,7 +15,5 @@
   composes: bgGreen2 from './colors.css' bgGreen1Hover from './colors.css';
   font-size: 1.2em;
   padding: 10px;
-  &:hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 }
