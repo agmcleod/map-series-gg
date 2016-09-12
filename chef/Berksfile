@@ -2,3 +2,8 @@ source 'https://supermarket.chef.io'
 
 metadata
 
+cookbook 'apt'
+cookbook 'nodejs', '~> 2.4.4'
+
+cookbook 'common', path: './cookbooks/common'
+cookbook 'nodejs_local', path: './cookbooks/nodejs_local'
