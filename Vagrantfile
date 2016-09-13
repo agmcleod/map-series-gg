@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = 'ubuntu/trusty64'
   config.vm.network "private_network", ip: '192.168.10.10'
   config.vm.network "forwarded_port", guest: 8200, host: 8200
-  config.vm.synced_folder '.', '/var/www/map-series-gg', type: 'nfs'
+  # config.vm.synced_folder '.', '/var/www/map-series-gg', type: 'nfs'
 
   config.vm.provider 'virtualbox' do |v|
     v.memory = 4096
@@ -36,7 +36,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       'recipe[common::setup]',
       'recipe[nodejs_local::nodesource_repo]',
       'recipe[nodejs_local::install_nodejs]',
-      'recipe[nodejs_local::global_npm_packages]'
+      'recipe[nodejs_local::global_npm_packages]',
+      'recipe[common::deploy]'
     ]
   end
 end
