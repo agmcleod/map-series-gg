@@ -1,28 +1,28 @@
 include_recipe 'pm2::default'
 
-# app = search("aws_opsworks_app").first
-# Chef::Log.info("*** app - shortname              = '#{app['shortname']}' **********")
-# Chef::Log.info("*** app - source                 = '#{app['app_source']}' **********")
-# Chef::Log.info("*** app - environment            = '#{app['environment']}' **********")
-# Chef::Log.info("*** app - url                    = '#{app['app_source']['url']}' **********")
-# Chef::Log.info("*** app - user                   = '#{app['app_source']['user']}' **********")
-# Chef::Log.info("*** app - password               = '#{app['app_source']['password']}' **********")
-# Chef::Log.info("*** node - deploy                = '#{node['deploy']}' **********")
-# Chef::Log.info("*** node - deploy - install_path = '#{node['deploy']['install_path']}' **********")
-# Chef::Log.info("*** node - deploy - releases_dir = '#{node['deploy']['releases_dir']}' **********")
+app = search("aws_opsworks_app").first
+Chef::Log.info("*** app - shortname              = '#{app['shortname']}' **********")
+Chef::Log.info("*** app - source                 = '#{app['app_source']}' **********")
+Chef::Log.info("*** app - environment            = '#{app['environment']}' **********")
+Chef::Log.info("*** app - url                    = '#{app['app_source']['url']}' **********")
+Chef::Log.info("*** app - user                   = '#{app['app_source']['user']}' **********")
+Chef::Log.info("*** app - password               = '#{app['app_source']['password']}' **********")
+Chef::Log.info("*** node - deploy                = '#{node['deploy']}' **********")
+Chef::Log.info("*** node - deploy - install_path = '#{node['deploy']['install_path']}' **********")
+Chef::Log.info("*** node - deploy - releases_dir = '#{node['deploy']['releases_dir']}' **********")
 
 # cheat:
-node = {
-  'deploy' => {
-    'releases_dir' => '/var/www/map-series-gg/releases',
-    'install_path' => '/var/www/map-series-gg/current',
-    'shared_dir' => '/var/www/map-series-gg/shared',
-    'user' => 'vagrant',
-    'group' => 'vagrant'
-  },
-  'git_repository' => 'git://github.com/agmcleod/map-series-gg.git',
-  'git_revision' => 'master'
-}
+# node = {
+#   'deploy' => {
+#     'releases_dir' => '/var/www/map-series-gg/releases',
+#     'install_path' => '/var/www/map-series-gg/current',
+#     'shared_dir' => '/var/www/map-series-gg/shared',
+#     'user' => 'vagrant',
+#     'group' => 'vagrant'
+#   },
+#   'git_repository' => 'git://github.com/agmcleod/map-series-gg.git',
+#   'git_revision' => 'master'
+# }
 
 def create_dir(node, path, recursive_create = false)
   directory path do
