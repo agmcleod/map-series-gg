@@ -15,29 +15,39 @@ include_recipe 'pm2::default'
 node = {
   'deploy' => {
     'releases_dir' => '/var/www/map-series-gg/releases',
-    'install_path' => '/var/www/map-series-gg',
+    'install_path' => '/var/www/map-series-gg/current',
+    'shared_dir' => '/var/www/map-series-gg/shared',
     'user' => 'vagrant',
     'group' => 'vagrant'
-  }
+  },
+  'git_repository' => 'git://github.com/agmcleod/map-series-gg.git',
+  'git_revision' => 'master'
 }
 
-directory node['deploy']['releases_dir'] do
-  owner node['deploy']['user']
-  group node['deploy']['group']
-  mode '0755'
-  recursive true
-  action :create
-end
-
-release_dir = "#{node['deploy']['releases_dir']}/#{DateTime.now.strftime '%Y%m%d%H%M%S'}"
-
-git release_dir do
-  repository node[:app_name][:git_repository]
-  revision node[:app_name][:git_revision]
-  action :sync
+def create_dir(node, path)
+  directory path do
+    owner node['deploy']['user']
+    group node['deploy']['group']
+    mode '0755'
+    recursive true
+    action :create
+  end
 end
 
 install_path = node['deploy']['install_path']
+shared_dir = node['deploy']['shared_dir']
+
+create_dir node, install_path
+create_dir node, shared_dir
+create_dir node, node['deploy']['releases_dir']
+release_dir = "#{node['deploy']['releases_dir']}/#{DateTime.now.strftime '%Y%m%d%H%M%S'}"
+create_dir node, release_dir
+
+git release_dir do
+  repository node['git_repository']
+  revision node['git_revision']
+  action :sync
+end
 
 link install_path do
   to release_dir
@@ -46,12 +56,26 @@ link install_path do
   group node['deploy']['group']
 end
 
-bash 'install node deps, and build' do
-  cwd install_path
+bash 'install node deps' do
   user node['deploy']['user']
+  cwd shared_dir
   code <<-EOH
-    npm install
-    ./node_modules/webpack/bin/webpack.js --config webpack.production.config.js
+  npm install ../current
+  EOH
+end
+
+link "#{install_path}/node_modules" do
+  to "#{shared_dir}/node_modules"
+  link_type :symbolic
+  owner node['deploy']['user']
+  group node['deploy']['group']
+end
+
+bash 'build client js' do
+  user node['deploy']['user']
+  cwd install_path
+  code <<-EOH
+  ./node_modules/webpack/bin/webpack.js --config webpack.production.config.js
   EOH
 end
 
