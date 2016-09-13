@@ -24,12 +24,12 @@ node = {
   'git_revision' => 'master'
 }
 
-def create_dir(node, path)
+def create_dir(node, path, recursive_create = false)
   directory path do
     owner node['deploy']['user']
     group node['deploy']['group']
     mode '0755'
-    recursive true
+    recursive recursive_create
     action :create
   end
 end
@@ -37,8 +37,7 @@ end
 install_path = node['deploy']['install_path']
 shared_dir = node['deploy']['shared_dir']
 
-create_dir node, install_path
-create_dir node, shared_dir
+create_dir node, "#{shared_dir}/node_modules", true
 create_dir node, node['deploy']['releases_dir']
 release_dir = "#{node['deploy']['releases_dir']}/#{DateTime.now.strftime '%Y%m%d%H%M%S'}"
 create_dir node, release_dir
@@ -49,19 +48,17 @@ git release_dir do
   action :sync
 end
 
+execute "chown-release" do
+  command "chown -R #{node['deploy']['user']}:#{node['deploy']['group']} #{release_dir}"
+  user "root"
+  action :run
+end
+
 link install_path do
   to release_dir
   link_type :symbolic
   owner node['deploy']['user']
   group node['deploy']['group']
-end
-
-bash 'install node deps' do
-  user node['deploy']['user']
-  cwd shared_dir
-  code <<-EOH
-  npm install ../current
-  EOH
 end
 
 link "#{install_path}/node_modules" do
@@ -71,12 +68,22 @@ link "#{install_path}/node_modules" do
   group node['deploy']['group']
 end
 
+bash 'install node deps' do
+  user node['deploy']['user']
+  cwd release_dir
+  code <<-EOH
+  npm install
+  EOH
+  environment 'HOME' => '/home/vagrant'
+end
+
 bash 'build client js' do
   user node['deploy']['user']
   cwd install_path
   code <<-EOH
   ./node_modules/webpack/bin/webpack.js --config webpack.production.config.js
   EOH
+  environment 'HOME' => '/home/vagrant'
 end
 
 pm2_application 'map-series-gg' do
