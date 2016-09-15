@@ -1,1 +1,1 @@
-name 'cookbooks'
+name 'map-series-gg'

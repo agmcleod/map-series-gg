@@ -1,8 +1,0 @@
-{
-  "deploy": {
-    "install_path": "/var/www/map-series-gg",
-    "releases_dir" : "/var/www/map-series-gg/releases",
-    "user" : "www-data",
-    "group": "www-data"
-  }
-}
