@@ -4,6 +4,6 @@ directory node['deploy']['app_path'] do
   owner node['deploy']['user']
   group node['deploy']['group']
   mode '0755'
-  recursive recursive_create
+  recursive true
   action :create
 end
