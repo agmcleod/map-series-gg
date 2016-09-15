@@ -74,7 +74,7 @@ bash 'install node deps' do
   code <<-EOH
   npm install
   EOH
-  environment 'HOME' => '/home/vagrant'
+  environment 'HOME' => "/home/#{node['deploy']['user']}"
 end
 
 bash 'build client js' do
@@ -83,7 +83,7 @@ bash 'build client js' do
   code <<-EOH
   ./node_modules/webpack/bin/webpack.js --config webpack.production.config.js
   EOH
-  environment 'HOME' => '/home/vagrant'
+  environment 'HOME' => "/home/#{node['deploy']['user']}"
 end
 
 pm2_application 'map-series-gg' do
