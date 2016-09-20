@@ -24,5 +24,5 @@ while [[ -z "$SECRET_KEY" ]] ; do
 done
 
 cp $COOKBOOKARCHIVE latest.tar.gz
-s3cmd put $COOKBOOKARCHIVE s3://$S3_BUCKET/$COOKBOOKARCHIVE --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY
+# s3cmd put $COOKBOOKARCHIVE s3://$S3_BUCKET/$COOKBOOKARCHIVE --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY
 s3cmd put latest.tar.gz s3://$S3_BUCKET/latest.tar.gz --access_key=$ACCESS_KEY --secret_key=$SECRET_KEY

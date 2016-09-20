@@ -17,6 +17,7 @@ Chef::Log.info("*** node - deploy - releases_dir = '#{node['deploy']['releases_d
 #     'releases_dir' => '/var/www/map-series-gg/releases',
 #     'install_path' => '/var/www/map-series-gg/current',
 #     'shared_dir' => '/var/www/map-series-gg/shared',
+#     'app_path' => '/var/www/map-series-gg',
 #     'user' => 'vagrant',
 #     'group' => 'vagrant'
 #   },
@@ -68,21 +69,18 @@ link "#{install_path}/node_modules" do
   group node['deploy']['group']
 end
 
-bash 'install node deps' do
-  user node['deploy']['user']
+execute 'npm install' do
+  user 'root'
+  # group node['deploy']['group']
   cwd release_dir
-  code <<-EOH
-  npm install
-  EOH
   environment 'HOME' => "/home/#{node['deploy']['user']}"
 end
 
-bash 'build client js' do
-  user node['deploy']['user']
+execute 'build client js' do
+  user 'root'
+  # group node['deploy']['group']
   cwd install_path
-  code <<-EOH
-  ./node_modules/webpack/bin/webpack.js --config webpack.production.config.js
-  EOH
+  command './node_modules/webpack/bin/webpack.js --config webpack.production.config.js'
   environment 'HOME' => "/home/#{node['deploy']['user']}"
 end
 
