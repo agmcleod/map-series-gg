@@ -63,10 +63,10 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
     case SAVE_SERIES:
-      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
+      state.series = Object.assign({}, state.series, { [(action.data as Series)._id]: action.data });
       return Object.assign({}, state, { isFetching: false, succeeded: true });
     case NEW_SERIES:
-      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
+      state.series = Object.assign({}, state.series, { [(action.data as Series)._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
       const data = action.data as Doc[];
