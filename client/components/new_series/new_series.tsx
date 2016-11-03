@@ -1,39 +1,26 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import styles from './new_series_styles.css';
 import formStyles from '../../globalstyles/form.css';
 
 import { connect } from 'react-redux';
 import { newSeries } from '../../reducers/series';
 
-type Props = {
+interface seriesState {
+  name: string,
+  seriesMaps: string
+}
+
+interface props {
+  data: Object,
   newSeries: (data: Object) => void
-};
+}
 
-class NewSeries extends React.Component {
-
-  props: Props;
-
-  state: {
-    name: string;
-    seriesMaps: string;
-  }
-
+class NewSeries extends React.Component<props, seriesState> {
   static displayName = 'NewSeries';
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      name: '',
-      seriesMaps: ''
-    };
-
-    // some gross flow workaround needed for rebinding method
-    (this:any)._createSeries = this._createSeries.bind(this);
-  }
-
-  _createSeries(e) {
+  _createSeries(e: any) {
     e.preventDefault();
 
     const { name, seriesMaps } = this.state;
@@ -49,9 +36,17 @@ class NewSeries extends React.Component {
     }
   }
 
-  _onFieldChange(e, propName: string) {
-    const nState = {};
-    nState[propName] = e.target.value;
+  _onFieldChange(e: any, propName: string) {
+    const nState: seriesState = {
+      name: this.state.name,
+      seriesMaps: this.state.seriesMaps
+    };
+    if (propName === 'name') {
+      nState.name = e.target.value;
+    } else if (propName === 'seriesMaps') {
+      nState.seriesMaps = e.target.value;
+    }
+
     this.setState(nState);
   }
 

@@ -1,11 +1,9 @@
-// @flow
-
-import React from 'react';
+import * as React from 'react';
 import routes from '../routes';
 
 import appStyles from './app.css';
 
-export default class App extends React.Component {
+export default class App extends React.Component<{}, {}> {
   static displayName = 'App';
 
   render() {

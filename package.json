@@ -11,6 +11,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node-uuid": "0.0.28",
+    "@types/pouchdb": "^5.4.28",
+    "@types/react": "^0.14.44",
+    "@types/react-dom": "^0.14.18",
+    "@types/react-redux": "^4.4.32",
+    "@types/react-router": "^2.0.38",
+    "@types/redux": "^3.6.31",
+    "@types/redux-thunk": "^2.1.31",
     "classnames": "^2.2.5",
     "express": "^4.14.0",
     "jade": "^1.11.0",
@@ -43,7 +51,9 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "postcss-loader": "^0.10.1",
     "postcss-nested": "^1.0.0",
+    "source-map-loader": "^0.1.5",
     "style-loader": "^0.13.1",
+    "ts-loader": "^1.0.0",
     "webpack": "^1.13.1"
   }
 }
