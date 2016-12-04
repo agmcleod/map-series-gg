@@ -49,7 +49,7 @@ class ViewSeries extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.state.succeeded) {
+    if (this.props.succeeded) {
       this.props.unsetSucceeded();
     }
   }
@@ -66,7 +66,7 @@ class ViewSeries extends React.Component {
       }
     }
 
-    return { seriesMaps, bestOf, succeeded: props.succeeded };
+    return { seriesMaps, bestOf };
   }
 
   _onBestOfChange(e) {
@@ -162,7 +162,7 @@ class ViewSeries extends React.Component {
 
     return (
       <div>
-        {this.state.succeeded ? this._renderSuccededNotice() : null}
+        {this.props.succeeded ? this._renderSuccededNotice() : null}
         <h1>{series.name}</h1>
         <p><Link to='/'>Back</Link></p>
         {this._renderBestOf()}
