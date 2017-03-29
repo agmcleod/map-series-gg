@@ -1,33 +1,7 @@
-// @flow
-
 import uuid from 'node-uuid';
-import type { Action, Dispatch } from 'redux';
 import db, { index_name } from '../db';
 
-export type GameMap = {
-  vetoed: string,
-  order: number,
-  name: string,
-  played: boolean
-};
-
-export type Series = {
-  _id: string,
-  _rev: string,
-  name: string,
-  resource: string,
-  orderSet: boolean,
-  seriesMaps: Array<GameMap>,
-  bestOf: ?number
-};
-
-export type SeriesState = {
-  series: { [id:string]: Series },
-  isFetching: boolean,
-  succeeded: boolean
-}
-
-const defaultState: SeriesState = {
+const defaultState = {
   series: {},
   isFetching: false,
   succeeded: false
@@ -39,7 +13,7 @@ const LIST_SERIES = 'LIST_SERIES';
 const SAVE_SERIES = 'SAVE_SERIES';
 const UNSET_SUCCEEDED = 'UNSET_SUCCEEDED';
 
-export default function reducer(state: SeriesState = defaultState, action: Action) {
+export default function reducer(state = defaultState, action = {}) {
   const seriesMap = {};
   switch (action.type) {
     case LOADING:
@@ -51,8 +25,9 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
-      for (let i = 0; i < action.data.length; i++) {
-        const row = action.data[i].doc;
+      const data = action.data as Doc[];
+      for (let i = 0; i < data.length; i++) {
+        const row = data[i].doc;
         seriesMap[row._id] = row;
       }
       return Object.assign({}, state, { series: seriesMap, isFetching: false });
@@ -63,7 +38,7 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
 }
 
 export function listSeries() {
-  return (dispatch: Dispatch) => {
+  return (dispatch) => {
     dispatch({ type: LOADING });
     return db.query(`${index_name}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
       dispatch({ type: LIST_SERIES, data: res.rows });
@@ -71,18 +46,18 @@ export function listSeries() {
   };
 }
 
-export function newSeries(data: Object) {
-  return (dispatch: Dispatch) => {
+export function newSeries(data) {
+  return (dispatch) => {
     dispatch({ type: LOADING });
     data._id = uuid.v1();
     data.resource = 'series';
-    const seriesMaps = data.seriesMaps.map((mapName): GameMap => {
+    const seriesMaps = data.seriesMaps.map((mapName) => {
       return {
         vetoed: '',
         order: 0,
         name: mapName,
         played: false
-      };
+      }
     });
 
     data.seriesMaps = seriesMaps;
@@ -92,8 +67,8 @@ export function newSeries(data: Object) {
   };
 }
 
-export function saveSeries(data: Series) {
-  return (dispatch: Dispatch) => {
+export function saveSeries(data) {
+  return (dispatch) => {
     dispatch({ type: LOADING });
     return db.put(data).then((res) => {
       data._rev = res._rev;
@@ -103,7 +78,7 @@ export function saveSeries(data: Series) {
 }
 
 export function unsetSucceeded() {
-  return (dispatch: Dispatch) => {
+  return (dispatch) => {
     dispatch({ type: UNSET_SUCCEEDED });
   };
 }

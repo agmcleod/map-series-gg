@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import type { Series } from '../../reducers/series';
+import { Series } from '../../reducers/series';
 import { listSeries, saveSeries, unsetSucceeded } from '../../reducers/series';
 import styles from './view_series_styles.css';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import formStyle from '../../globalstyles/form.css';
-
-type Params = {
-  id: string
-};
 
 type Props = {
   listSeries: () => void,
@@ -21,17 +17,20 @@ type Props = {
   params: Params
 }
 
-type State = {
-  seriesMaps: Array<Series>
-};
-
 class ViewSeries extends React.Component {
-  props: Props;
-  state: State;
+  static propTyps = {
+    listSeries: React.PropTypes.func.isRequired,
+    isFetching: React.PropTypes.bool,
+    series: React.PropTypes.object,
+    saveSeries: React.PropTypes.func.isRequired,
+    succeeded:  React.PropTypes.bool,
+    unsetSucceeded: React.PropTypes.func.isRequired,
+    params: React.PropTypes.shape({ id: React.PropTypes.string })
+  }
 
   static displayName = 'ViewSeries';
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
 
     this._onFieldChange = this._onFieldChange.bind(this);

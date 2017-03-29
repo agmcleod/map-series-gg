@@ -3,8 +3,9 @@ var webpack = require('webpack');
 
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var assetsPath = path.join(__dirname, "public", "assets");
-var publicPath = "assets/";
+var assetsPath = path.join(__dirname, 'public', 'assets');
+var publicPath = 'assets/';
+const srcPath = path.join(__dirname, 'client');
 
 module.exports = {
   name: 'client',
@@ -20,16 +21,11 @@ module.exports = {
   devtool: 'source-map',
   module: {
     loaders: [{
+      test: /\.js$/,
+      include: srcPath,
+      loaders: ['babel']
+    }, {
       test: /\.html/, loader: 'file-loader'
-    }, {
-      test: /\.js$/,
-      include: path.join(__dirname),
-      loader: 'babel-loader',
-      exclude: /lib/
-    }, {
-      test: /\.js$/,
-      loader: 'eslint-loader',
-      exclude: /node_modules|lib/
     }, {
       test: /\.css$/,
       loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')

@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import { Router, Route, browserHistory } from 'react-router';
 
 import SeriesList from './components/series_list/series_list';
