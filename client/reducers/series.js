@@ -1,34 +1,7 @@
-import * as uuid from 'node-uuid';
+import uuid from 'node-uuid';
 import db, { index_name } from '../db';
 
-declare interface ObjectConstructor {
-  assign(...objects: Object[]): Object;
-}
-
-export type GameMap = {
-  vetoed: string,
-  order: number,
-  name: string,
-  played: boolean
-};
-
-export type Series = {
-  _id: string,
-  _rev: string,
-  name: string,
-  resource: string,
-  orderSet: boolean,
-  seriesMaps: Array<GameMap | string>,
-  bestOf?: number
-};
-
-export type SeriesState = {
-  series: { [id:string]: Series },
-  isFetching: boolean,
-  succeeded: boolean
-}
-
-const defaultState: SeriesState = {
+const defaultState = {
   series: {},
   isFetching: false,
   succeeded: false
@@ -40,33 +13,16 @@ const LIST_SERIES = 'LIST_SERIES';
 const SAVE_SERIES = 'SAVE_SERIES';
 const UNSET_SUCCEEDED = 'UNSET_SUCCEEDED';
 
-type Doc = {
-  _id: string,
-  _rev: string,
-  doc: Series
-}
-
-type Data = Series | Doc[];
-
-export type Action = {
-  type: string,
-  data?: Data
-}
-
-interface Dispatch {
-  (action: Action): void
-}
-
-export default function reducer(state: SeriesState = defaultState, action: Action) {
-  const seriesMap: { [_id: string]: Series; } = {};
+export default function reducer(state = defaultState, action = {}) {
+  const seriesMap = {};
   switch (action.type) {
     case LOADING:
       return Object.assign({}, state, { isFetching: true });
     case SAVE_SERIES:
-      state.series = Object.assign({}, state.series, { [(action.data as Series)._id]: action.data });
+      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false, succeeded: true });
     case NEW_SERIES:
-      state.series = Object.assign({}, state.series, { [(action.data as Series)._id]: action.data });
+      state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
       const data = action.data as Doc[];
@@ -82,7 +38,7 @@ export default function reducer(state: SeriesState = defaultState, action: Actio
 }
 
 export function listSeries() {
-  return (dispatch: Dispatch) => {
+  return (dispatch) => {
     dispatch({ type: LOADING });
     return db.query(`${index_name}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
       dispatch({ type: LIST_SERIES, data: res.rows });
@@ -90,12 +46,12 @@ export function listSeries() {
   };
 }
 
-export function newSeries(data: Series) {
-  return (dispatch: Dispatch) => {
+export function newSeries(data) {
+  return (dispatch) => {
     dispatch({ type: LOADING });
     data._id = uuid.v1();
     data.resource = 'series';
-    const seriesMaps = data.seriesMaps.map((mapName: string): GameMap => {
+    const seriesMaps = data.seriesMaps.map((mapName) => {
       return {
         vetoed: '',
         order: 0,
@@ -107,22 +63,22 @@ export function newSeries(data: Series) {
     data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
-    }).catch((err: Error) => console.error(err));
+    }).catch((err) => console.error(err));
   };
 }
 
-export function saveSeries(data: Series) {
-  return (dispatch: Dispatch) => {
+export function saveSeries(data) {
+  return (dispatch) => {
     dispatch({ type: LOADING });
-    return db.put(data).then((res: Doc) => {
+    return db.put(data).then((res) => {
       data._rev = res._rev;
       dispatch({ type: SAVE_SERIES, data });
-    }).catch((err: Error) => console.error(err));
+    }).catch((err) => console.error(err));
   };
 }
 
 export function unsetSucceeded() {
-  return (dispatch: Dispatch) => {
+  return (dispatch) => {
     dispatch({ type: UNSET_SUCCEEDED });
   };
 }

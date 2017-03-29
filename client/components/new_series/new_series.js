@@ -7,20 +7,10 @@ import formStyles from '../../globalstyles/form.css';
 import { connect } from 'react-redux';
 import { newSeries } from '../../reducers/series';
 
-interface seriesState {
-  name: string,
-  seriesMaps: string
-}
-
-interface props {
-  data: Object,
-  newSeries: (data: Object) => void
-}
-
-class NewSeries extends React.Component<props, seriesState> {
+class NewSeries extends React.Component {
   static displayName = 'NewSeries';
 
-  _createSeries(e: any) {
+  _createSeries(e) {
     e.preventDefault();
 
     const { name, seriesMaps } = this.state;
@@ -36,8 +26,8 @@ class NewSeries extends React.Component<props, seriesState> {
     }
   }
 
-  _onFieldChange(e: any, propName: string) {
-    const nState: seriesState = {
+  _onFieldChange(e, propName) {
+    const nState = {
       name: this.state.name,
       seriesMaps: this.state.seriesMaps
     };
