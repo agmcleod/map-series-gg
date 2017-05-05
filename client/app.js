@@ -1,16 +1,25 @@
+import 'core-js/es6/symbol'
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { browserHistory } from 'react-router';
 import { Provider } from 'react-redux';
-import reduxThunk from 'redux-thunk'
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
+import reduxThunk from 'redux-thunk';
+import routes from './routes';
 
-import { App } from './containers/app';
+import App from './containers/app';
 import seriesReducer from './reducers/series';
 
-const store = createStore(combineReducers({ seriesReducer }), applyMiddleware(reduxThunk));
+const store = createStore(combineReducers({
+  seriesReducer,
+  routing: routerReducer
+}), applyMiddleware(reduxThunk));
 
-render(
+const history = syncHistoryWithStore(browserHistory, store);
+
+ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App routes={routes(history)} />
   </Provider>, document.getElementById('content')
 );

@@ -1,6 +1,6 @@
 // @flow
 
-import * as React from 'react';
+import React from 'react';
 import styles from './new_series_styles.css';
 import formStyles from '../../globalstyles/form.css';
 
@@ -9,6 +9,19 @@ import { newSeries } from '../../reducers/series';
 
 class NewSeries extends React.Component {
   static displayName = 'NewSeries';
+
+  static propTypes = {
+    newSeries: React.PropTypes.func.isRequired
+  }
+
+  constructor (props) {
+    super(props);
+    this.state = {
+      name: '',
+      seriesMaps: ''
+    };
+    this._createSeries = this._createSeries.bind(this);
+  }
 
   _createSeries(e) {
     e.preventDefault();

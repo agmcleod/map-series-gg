@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "classnames": "^2.2.5",
+    "core-js": "^2.4.1",
     "express": "^4.14.0",
     "jade": "^1.11.0",
     "lodash": "^4.15.0",
@@ -22,6 +23,7 @@
     "react-dom": "^15.3.0",
     "react-redux": "^4.4.5",
     "react-router": "^2.6.1",
+    "react-router-redux": "^2.6.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0"
   },
@@ -37,9 +39,9 @@
     "babel-register": "^6.18.0",
     "css-loader": "^0.23.1",
     "empty": "^0.10.1",
-    "eslint": "^3.3.1",
+    "eslint": "^3.19.0",
     "eslint-loader": "^1.5.0",
-    "eslint-plugin-react": "^6.1.1",
+    "eslint-plugin-react": "^6.10.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "postcss-loader": "^0.10.1",
     "postcss-nested": "^1.0.0",

@@ -1,29 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Series } from '../../reducers/series';
 import { listSeries, saveSeries, unsetSucceeded } from '../../reducers/series';
 import styles from './view_series_styles.css';
 import classNames from 'classnames';
 import { Link } from 'react-router';
 import formStyle from '../../globalstyles/form.css';
 
-type Props = {
-  listSeries: () => void,
-  isFetching: boolean,
-  series: { [id:string]:Series },
-  saveSeries: (data: Series) => void,
-  succeeded: boolean,
-  unsetSucceeded: (data: Series) => void,
-  params: Params
-}
-
 class ViewSeries extends React.Component {
-  static propTyps = {
+  static propTypes = {
     listSeries: React.PropTypes.func.isRequired,
     isFetching: React.PropTypes.bool,
     series: React.PropTypes.object,
     saveSeries: React.PropTypes.func.isRequired,
-    succeeded:  React.PropTypes.bool,
+    succeeded: React.PropTypes.bool,
     unsetSucceeded: React.PropTypes.func.isRequired,
     params: React.PropTypes.shape({ id: React.PropTypes.string })
   }

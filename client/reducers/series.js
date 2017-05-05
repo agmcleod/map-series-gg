@@ -1,4 +1,5 @@
 import uuid from 'node-uuid';
+import { push } from 'react-router-redux';
 import db, { index_name } from '../db';
 
 const defaultState = {
@@ -7,11 +8,11 @@ const defaultState = {
   succeeded: false
 };
 
-const LOADING = 'LOADING';
-const NEW_SERIES = 'NEW_SERIES';
-const LIST_SERIES = 'LIST_SERIES';
-const SAVE_SERIES = 'SAVE_SERIES';
-const UNSET_SUCCEEDED = 'UNSET_SUCCEEDED';
+const LOADING = Symbol('LOADING');
+const NEW_SERIES = Symbol('NEW_SERIES');
+const LIST_SERIES = Symbol('LIST_SERIES');
+const SAVE_SERIES = Symbol('SAVE_SERIES');
+const UNSET_SUCCEEDED = Symbol('UNSET_SUCCEEDED');
 
 export default function reducer(state = defaultState, action = {}) {
   const seriesMap = {};
@@ -25,11 +26,9 @@ export default function reducer(state = defaultState, action = {}) {
       state.series = Object.assign({}, state.series, { [action.data._id]: action.data });
       return Object.assign({}, state, { isFetching: false });
     case LIST_SERIES:
-      const data = action.data as Doc[];
-      for (let i = 0; i < data.length; i++) {
-        const row = data[i].doc;
-        seriesMap[row._id] = row;
-      }
+      action.data.forEach((row) => {
+        seriesMap[row.doc._id] = row.doc;
+      });
       return Object.assign({}, state, { series: seriesMap, isFetching: false });
     case UNSET_SUCCEEDED:
       return Object.assign({}, state, { succeeded: false });
@@ -63,6 +62,8 @@ export function newSeries(data) {
     data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
+      console.log('go to', data._id);
+      dispatch(push(`/series/${data._id}`));
     }).catch((err) => console.error(err));
   };
 }
