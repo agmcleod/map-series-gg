@@ -56,13 +56,12 @@ export function newSeries(data) {
         order: 0,
         name: mapName,
         played: false
-      }
+      };
     });
 
     data.seriesMaps = seriesMaps;
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data });
-      console.log('go to', data._id);
       dispatch(push(`/series/${data._id}`));
     }).catch((err) => console.error(err));
   };
