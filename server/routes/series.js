@@ -1,12 +1,12 @@
-var express = require('express');
+const express = require('express')
 
-var router = express.Router();
-router.get('/', function(req, res, next) {
-  res.render('index');
-});
+const router = express.Router()
+router.get('/', (req, res, next) => {
+  res.render('index')
+})
 
-router.get('/series/:id', function(req, res, next) {
-  res.render('index');
-});
+router.get('/series/:id', (req, res, next) => {
+  res.render('index')
+})
 
-module.exports = router;
+module.exports = router

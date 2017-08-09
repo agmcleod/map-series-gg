@@ -1,25 +1,25 @@
-import PouchDB from 'pouchdb-browser';
+/* global emit */
+import PouchDB from 'pouchdb-browser'
 
-const db = new PouchDB('map-series-gg');
-
-export const index_name = 'index';
+const db = new PouchDB('map-series-gg')
+export const indexName = 'index'
 
 const ddoc = {
-  _id: `_design/${index_name}`,
+  _id: `_design/${indexName}`,
   views: {
     by_resource: {
-      map: (function mapFunction (doc) {
-        emit(doc.resource);
-      }).toString()
+      map: function mapFunction (doc) {
+        emit(doc.resource)
+      }.toString()
     }
   }
-};
+}
 // save it
 db.put(ddoc).catch(function (err) {
   // view doc already created
   if (err.name !== 'conflict') {
-    throw err;
+    throw err
   }
-});
+})
 
-export default db;
+export default db

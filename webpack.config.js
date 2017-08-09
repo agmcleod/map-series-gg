@@ -1,11 +1,10 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path')
 
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-var assetsPath = path.join(__dirname, 'public', 'assets');
-var publicPath = 'assets/';
-const srcPath = path.join(__dirname, 'client');
+const assetsPath = path.join(__dirname, 'public', 'assets')
+const publicPath = 'assets/'
+const srcPath = path.join(__dirname, 'client')
 
 module.exports = {
   name: 'client',
@@ -38,6 +37,6 @@ module.exports = {
   ],
 
   plugins: [
-   new ExtractTextPlugin('style.css', { allChunks: true })
+    new ExtractTextPlugin('style.css', { allChunks: true })
   ]
-};
+}

@@ -1,41 +1,39 @@
-// @flow
+import React from 'react'
+import styles from './new_series_styles.css'
+import formStyles from '../../globalstyles/form.css'
 
-import React from 'react';
-import styles from './new_series_styles.css';
-import formStyles from '../../globalstyles/form.css';
-
-import { connect } from 'react-redux';
-import { newSeries } from '../../reducers/series';
+import { connect } from 'react-redux'
+import { newSeries } from '../../reducers/series'
 
 class NewSeries extends React.Component {
-  static displayName = 'NewSeries';
+  static displayName = 'NewSeries'
 
   static propTypes = {
     newSeries: React.PropTypes.func.isRequired
   }
 
   constructor (props) {
-    super(props);
+    super(props)
     this.state = {
       name: '',
       seriesMaps: ''
-    };
-    this._createSeries = this._createSeries.bind(this);
+    }
+    this._createSeries = this._createSeries.bind(this)
   }
 
   _createSeries(e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    const { name, seriesMaps } = this.state;
+    const { name, seriesMaps } = this.state
 
     if (name && seriesMaps) {
       const data = {
         name,
         seriesMaps: seriesMaps.split(/\r\n|\n/)
-      };
+      }
 
-      this.props.newSeries(data);
-      this.setState({ name: '', seriesMaps: '' });
+      this.props.newSeries(data)
+      this.setState({ name: '', seriesMaps: '' })
     }
   }
 
@@ -43,14 +41,14 @@ class NewSeries extends React.Component {
     const nState = {
       name: this.state.name,
       seriesMaps: this.state.seriesMaps
-    };
+    }
     if (propName === 'name') {
-      nState.name = e.target.value;
+      nState.name = e.target.value
     } else if (propName === 'seriesMaps') {
-      nState.seriesMaps = e.target.value;
+      nState.seriesMaps = e.target.value
     }
 
-    this.setState(nState);
+    this.setState(nState)
   }
 
   render() {
@@ -79,8 +77,8 @@ class NewSeries extends React.Component {
           </fieldset>
         </form>
       </div>
-    );
+    )
   }
 }
 
-export default connect(null, { newSeries })(NewSeries);
+export default connect(null, { newSeries })(NewSeries)
