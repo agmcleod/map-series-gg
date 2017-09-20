@@ -3,13 +3,13 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const assetsPath = path.join(__dirname, 'public', 'assets')
-const publicPath = 'assets/'
+const publicPath = '../assets/'
 const srcPath = path.join(__dirname, 'client')
 
 module.exports = {
   name: 'client',
   entry: [
-    './client/app.js'
+    './app.js'
   ],
   output: {
     path: assetsPath,
