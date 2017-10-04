@@ -4,6 +4,13 @@ import PouchDB from 'pouchdb-browser'
 const db = new PouchDB('map-series-gg')
 export const indexName = 'index'
 
+// need to config this
+const remoteDb = new PouchDB('http://localhost:5984/db')
+
+db.sync(remoteDb).on('error', (err) => {
+  console.log(err)
+})
+
 const ddoc = {
   _id: `_design/${indexName}`,
   views: {

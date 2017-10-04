@@ -1,4 +1,4 @@
 node_modules
-public/assets/client-*
+client/public/assets/
 .vagrant
 chef/.settings

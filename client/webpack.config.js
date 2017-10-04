@@ -1,11 +1,11 @@
 const path = require('path')
 
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const assetsPath = path.join(__dirname, 'public', 'assets')
 const publicPath = '../assets/'
-const srcPath = path.join(__dirname, 'client')
-
+const srcPath = __dirname
 module.exports = {
   name: 'client',
   entry: [
@@ -37,6 +37,7 @@ module.exports = {
   ],
 
   plugins: [
-    new ExtractTextPlugin('style.css', { allChunks: true })
+    new ExtractTextPlugin('style.css', { allChunks: true }),
+    new HtmlWebpackPlugin()
   ]
 }
