@@ -7,5 +7,7 @@ services:
         HOST: "${HOST}"
         COUCH_ADMIN: "${COUCH_ADMIN}"
         COUCH_ADMIN_PASSWORD: "${COUCH_ADMIN_PASSWORD}"
+    volumes:
+      - ./couch:/couch
     ports:
       - '5984:5984'
