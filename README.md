@@ -14,3 +14,9 @@ docker-compose up -d
 # Run the setup script
 docker-compose exec couch bash './create-admin.sh'
 ```
+
+### Need to:
+
+* Figure out couchdb database creation and user assignmetn
+* How to do this for user sign ups (also setup user sign ups)
+* Connect couchdb for a given user to pouch
