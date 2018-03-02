@@ -11,3 +11,10 @@ services:
       - ./couch:/couch
     ports:
       - '5984:5984'
+  server:
+    build:
+      context: ./server
+    volumes:
+      - ./server:/app
+    ports:
+      - '8200:8200'
