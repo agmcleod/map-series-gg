@@ -15,6 +15,12 @@ docker-compose up -d
 docker-compose exec couch bash './create-admin.sh'
 ```
 
+When needing to rebuild due to Dockerfile changes:
+
+```
+docker-compose build
+```
+
 ### Need to:
 
 * Figure out couchdb database creation and user assignmetn

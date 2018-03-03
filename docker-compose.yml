@@ -14,7 +14,15 @@ services:
   server:
     build:
       context: ./server
+      args:
+        NODE_ENV: development
     volumes:
-      - ./server:/app
+      - yarn:/home/node/.cache/yarn
+      - ./server/package.json:/app/package.json
+      - ./server/yarn.lock:/app/yarn.lock
+      - ./server/src:/app/src
     ports:
       - '8200:8200'
+
+volumes:
+  yarn:
