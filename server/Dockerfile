@@ -3,23 +3,19 @@ FROM node:8-alpine
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
 
-WORKDIR /app
-RUN npm install -g yarn
+RUN apk update \
+  && apk add ca-certificates wget \
+  && update-ca-certificates
 
-RUN set -ex; \
-  if [ "$NODE_ENV" = "production" ]; then \
-    yarn install --no-cache --frozen-lockfile --production; \
-  elif [ "$NODE_ENV" = "test" ]; then \
-    touch yarn-error.log; \
-    mkdir -m 777 build; \
-    yarn install --no-cache --frozen-lockfile; \
-    chown -R node:node node_modules package.json yarn.lock yarn-error.log; \
-  else \
-    touch yarn-error.log; \
-    mkdir -p -m 777 node_modules /home/node/.cache/yarn; \
-    chown -R node:node node_modules package.json yarn.lock yarn-error.log /home/node/.cache/yarn; \
-  fi;
+WORKDIR /app
+RUN mkdir -p /opt
+RUN wget https://yarnpkg.com/latest.tar.gz
+RUN tar zvxf latest.tar.gz
+RUN mv yarn-* /opt/yarn
+ENV PATH "$PATH:/opt/yarn/bin"
+
+COPY package.json yarn.lock* .
+RUN yarn
 
 EXPOSE 8200
-USER node
-CMD ["yarn start"]
+CMD ["yarn", "start"]
