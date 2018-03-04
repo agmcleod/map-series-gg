@@ -21,8 +21,14 @@ When needing to rebuild due to Dockerfile changes:
 docker-compose build
 ```
 
+After building or adding dependencies, re-copy the yarn.lock:
+
+```
+docker run mapseriesgg_server cat /app/yarn.lock > server/yarn.lock
+```
+
 ### Need to:
 
-* Figure out couchdb database creation and user assignmetn
+* Figure out couchdb database creation and user assignment
 * How to do this for user sign ups (also setup user sign ups)
 * Connect couchdb for a given user to pouch

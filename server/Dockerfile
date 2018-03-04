@@ -14,7 +14,8 @@ RUN tar zvxf latest.tar.gz
 RUN mv yarn-* /opt/yarn
 ENV PATH "$PATH:/opt/yarn/bin"
 
-COPY package.json yarn.lock* .
+COPY package.json .
+COPY yarn.lock* .
 RUN yarn
 
 EXPOSE 8200
