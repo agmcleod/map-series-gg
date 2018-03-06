@@ -17,6 +17,8 @@ services:
       args:
         NODE_ENV: development
     volumes:
-      - ./server/src:/app/src
+      - ./server:/app
+    command: >
+      sh -c "yarn install && yarn dev"
     ports:
       - '8200:8200'

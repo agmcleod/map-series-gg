@@ -9,14 +9,7 @@ RUN apk update \
 
 WORKDIR /app
 RUN mkdir -p /opt
-RUN wget https://yarnpkg.com/latest.tar.gz
-RUN tar zvxf latest.tar.gz
-RUN mv yarn-* /opt/yarn
-ENV PATH "$PATH:/opt/yarn/bin"
-
-COPY package.json .
-COPY yarn.lock* .
-RUN yarn
-
-EXPOSE 8200
-CMD ["yarn", "start"]
+RUN wget https://yarnpkg.com/latest.tar.gz \
+  && tar zvxf latest.tar.gz \
+  && mv yarn-* /opt/yarn
+ENV PATH "/opt/yarn/bin:$PATH"

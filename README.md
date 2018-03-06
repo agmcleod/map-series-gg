@@ -13,12 +13,21 @@ I'm currently working on a couchdb setup with docker as the backend data for the
 docker-compose up -d
 # Run the setup script
 docker-compose exec couch bash './create-admin.sh'
+# Install the node dependencies. The server will be running, so you'll need to restart that too.
+docker-compose exec server sh -c "yarn"
+docker-compose restart server
 ```
 
 When needing to rebuild due to Dockerfile changes:
 
 ```
 docker-compose build
+```
+
+Add dependencies via:
+
+```
+docker-compose exec server sh -c "yarn add knex"
 ```
 
 After building or adding dependencies, re-copy the yarn.lock:
