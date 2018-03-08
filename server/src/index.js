@@ -1,24 +1,32 @@
 const express = require('express')
-const config = require('config')
+const logger = require('logger')
 const rp = require('request-promise-native')
+const { getURIBase } = require('./config')
+const { createUser, giveAccessToUser } = require('./users')
 
 const app = express()
 
 const router = express.Router()
 
-const {
-  couch_db: couchDb
-} = config
-
-router.post('/login', (req, res) => {
+router.post('/register', (req, res) => {
   const { username, password } = req.body
-  const uri = `http://${couchDb.username}:${couchDb.password}@${v.host}:${couchDb.port}/${username}`
-  rp(uri).then((response) => {
-    res.json(response.body)
+  const uri = `${getURIBase()}/${username}`
+  rp(uri).then(() => {
+    logger.info(`Username already taken: ${username}`)
+    res.status(400).json({
+      message: 'Username already taken'
+    })
   }).catch((err) => {
     if (err.status === 404) {
       rp({ uri, method: 'PUT' }).then(() => {
-
+        return createUser(username, password)
+      }).then(() => {
+        return giveAccessToUser(username)
+      }).catch((err) => {
+        logger.error(`Failed to create database for user: ${username}`)
+        res.status(500).json({
+          error: err.message
+        })
       })
     } else {
       res.status(500).json({
