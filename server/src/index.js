@@ -1,11 +1,31 @@
 const express = require('express')
+const config = require('config')
+const rp = require('request-promise-native')
 
 const app = express()
 
 const router = express.Router()
 
-router.use('/login', (req, res) => {
-  res.json({ ok: true })
+const {
+  couch_db: couchDb
+} = config
+
+router.post('/login', (req, res) => {
+  const { username, password } = req.body
+  const uri = `http://${couchDb.username}:${couchDb.password}@${v.host}:${couchDb.port}/${username}`
+  rp(uri).then((response) => {
+    res.json(response.body)
+  }).catch((err) => {
+    if (err.status === 404) {
+      rp({ uri, method: 'PUT' }).then(() => {
+
+      })
+    } else {
+      res.status(500).json({
+        error: err.message
+      })
+    }
+  })
 })
 
 // notes for setting up actual endpoints here

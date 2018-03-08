@@ -1,0 +1,6 @@
+{
+  "couch_db": {
+    "username": "COUCH_ADMIN",
+    "password": "COUCH_ADMIN_PASSWORD"
+  }
+}

@@ -16,9 +16,13 @@ services:
       context: ./server
       args:
         NODE_ENV: development
+        COUCH_ADMIN: "${COUCH_ADMIN}"
+        COUCH_ADMIN_PASSWORD: "${COUCH_ADMIN_PASSWORD}"
     volumes:
       - ./server:/app
     command: >
       sh -c "yarn install && yarn dev"
     ports:
       - '8200:8200'
+    links:
+      - couch

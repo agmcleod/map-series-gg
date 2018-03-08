@@ -30,12 +30,6 @@ Add dependencies via:
 docker-compose exec server sh -c "yarn add knex"
 ```
 
-After building or adding dependencies, re-copy the yarn.lock:
-
-```
-docker run mapseriesgg_server cat /app/yarn.lock > server/yarn.lock
-```
-
 ### Need to:
 
 * Figure out couchdb database creation and user assignment
