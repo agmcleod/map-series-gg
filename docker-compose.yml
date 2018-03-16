@@ -3,10 +3,10 @@ services:
   couch:
     build:
       context: ./couch
-      args:
-        HOST: "${HOST}"
-        COUCH_ADMIN: "${COUCH_ADMIN}"
-        COUCH_ADMIN_PASSWORD: "${COUCH_ADMIN_PASSWORD}"
+    environment:
+      - HOST=${HOST}
+      - COUCH_ADMIN=${COUCH_ADMIN}
+      - COUCH_ADMIN_PASSWORD=${COUCH_ADMIN_PASSWORD}
     volumes:
       - ./couch:/couch
     ports:
@@ -16,8 +16,9 @@ services:
       context: ./server
       args:
         NODE_ENV: development
-        COUCH_ADMIN: "${COUCH_ADMIN}"
-        COUCH_ADMIN_PASSWORD: "${COUCH_ADMIN_PASSWORD}"
+    environment:
+      - COUCH_ADMIN=${COUCH_ADMIN}
+      - COUCH_ADMIN_PASSWORD=${COUCH_ADMIN_PASSWORD}
     volumes:
       - ./server:/app
     command: >

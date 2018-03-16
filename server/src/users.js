@@ -1,8 +1,9 @@
 const rp = require('request-promise-native')
-const { getURIBase } = require('./config')
+const { getURIBase } = require('./couch')
 
 function createUser (username, password) {
   const uri = `${getURIBase()}/_users/org.couchdb.user:${username}`
+  console.log({ uri })
   return rp({
     uri,
     method: 'PUT',
@@ -11,7 +12,8 @@ function createUser (username, password) {
       password,
       roles: [],
       type: 'user'
-    }
+    },
+    json: true
   })
 }
 
@@ -29,7 +31,8 @@ function giveAccessToUser (username) {
         names: [username],
         roles: []
       }
-    }
+    },
+    json: true
   })
 }
 

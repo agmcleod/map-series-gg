@@ -1,7 +1,7 @@
 const express = require('express')
-const logger = require('logger')
+const logger = require('./logger')
 const rp = require('request-promise-native')
-const { getURIBase } = require('./config')
+const { getURIBase } = require('./couch')
 const { createUser, giveAccessToUser } = require('./users')
 
 const app = express()
@@ -17,11 +17,15 @@ router.post('/register', (req, res) => {
       message: 'Username already taken'
     })
   }).catch((err) => {
-    if (err.status === 404) {
+    if (err.statusCode === 404) {
       rp({ uri, method: 'PUT' }).then(() => {
+        logger.debug(`Creating user document: ${username}`)
         return createUser(username, password)
       }).then(() => {
+        logger.debug('Giving them access to the db')
         return giveAccessToUser(username)
+      }).then(() => {
+        res.status(200).json({ 'ok': true })
       }).catch((err) => {
         logger.error(`Failed to create database for user: ${username}`)
         res.status(500).json({

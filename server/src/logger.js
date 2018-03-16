@@ -1,2 +1,3 @@
 const bunyan = require('bunyan')
-module.exports = bunyan.createLogger({ name: 'map-series-gg' })
+const config = require('config')
+module.exports = bunyan.createLogger({ name: 'map-series-gg', level: config.logger.level })

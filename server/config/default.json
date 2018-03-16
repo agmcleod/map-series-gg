@@ -4,5 +4,8 @@
     "port": 5984,
     "username": "",
     "password": ""
+  },
+  "logger": {
+    "level": "debug"
   }
 }
