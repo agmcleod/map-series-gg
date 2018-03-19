@@ -1,5 +1,5 @@
 node_modules
-client/public/assets/
+client/dist
 .vagrant
 env
 gitignore

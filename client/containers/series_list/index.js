@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import styles from './styles.css'
-import NewSeries from '../new_series/new_series'
+import NewSeries from '../../components/new_series'
 
 import { listSeries } from '../../reducers/series'
 import { connect } from 'react-redux'
@@ -17,9 +17,9 @@ class SeriesList extends React.Component {
   }
 
   static propTypes = {
-    listSeries: React.PropTypes.func.isRequired,
-    series: React.PropTypes.object.isRequired,
-    isFetching: React.PropTypes.bool,
+    listSeries: PropTypes.func.isRequired,
+    series: PropTypes.object.isRequired,
+    isFetching: PropTypes.bool,
   }
 
   constructor (props) {

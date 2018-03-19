@@ -1,5 +1,6 @@
 import React from 'react'
-import styles from './new_series_styles.css'
+import { PropTypes } from 'prop-types'
+import styles from './index.css'
 import formStyles from '../../globalstyles/form.css'
 
 import { connect } from 'react-redux'
@@ -9,7 +10,7 @@ class NewSeries extends React.Component {
   static displayName = 'NewSeries'
 
   static propTypes = {
-    newSeries: React.PropTypes.func.isRequired
+    newSeries: PropTypes.func.isRequired
   }
 
   constructor (props) {

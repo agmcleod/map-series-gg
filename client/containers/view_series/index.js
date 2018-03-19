@@ -1,20 +1,21 @@
 import React from 'react'
+import { PropTypes } from 'prop-types'
 import { connect } from 'react-redux'
 import { listSeries, saveSeries, unsetSucceeded } from '../../reducers/series'
-import styles from './view_series_styles.css'
+import styles from './index.css'
 import classNames from 'classnames'
 import { Link } from 'react-router'
 import formStyle from '../../globalstyles/form.css'
 
 class ViewSeries extends React.Component {
   static propTypes = {
-    listSeries: React.PropTypes.func.isRequired,
-    isFetching: React.PropTypes.bool,
-    series: React.PropTypes.object,
-    saveSeries: React.PropTypes.func.isRequired,
-    succeeded: React.PropTypes.bool,
-    unsetSucceeded: React.PropTypes.func.isRequired,
-    params: React.PropTypes.shape({ id: React.PropTypes.string })
+    listSeries: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool,
+    series: PropTypes.object,
+    saveSeries: PropTypes.func.isRequired,
+    succeeded: PropTypes.bool,
+    unsetSucceeded: PropTypes.func.isRequired,
+    params: PropTypes.shape({ id: PropTypes.string })
   }
 
   static displayName = 'ViewSeries'

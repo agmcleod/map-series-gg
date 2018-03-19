@@ -10,16 +10,26 @@ import routes from './routes'
 
 import App from './containers/app'
 import seriesReducer from './reducers/series'
+import loginReducer from './reducers/login'
+import flashReducer from './reducers/flash'
+import pouchReducer from './reducers/pouch'
 
 const store = createStore(combineReducers({
   seriesReducer,
+  loginReducer,
+  flashReducer,
+  pouchReducer,
   routing: routerReducer
 }), applyMiddleware(reduxThunk, routerMiddleware(browserHistory)))
 
 const history = syncHistoryWithStore(browserHistory, store)
 
+const appDiv = document.createElement('div')
+appDiv.id = 'app'
+document.body.appendChild(appDiv)
+
 ReactDOM.render(
   <Provider store={store}>
     <App routes={routes(history)} />
-  </Provider>, document.getElementById('content')
+  </Provider>, appDiv
 )

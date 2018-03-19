@@ -1,0 +1,9 @@
+{
+  "couch_db": {
+    "protocol": "http://",
+    "url": "localhost:5984"
+  },
+  "api": {
+    "url": "http://localhost:8200"
+  }
+}

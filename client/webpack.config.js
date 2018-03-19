@@ -1,23 +1,27 @@
 const path = require('path')
-
+const config = require('config')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const assetsPath = path.join(__dirname, 'public', 'assets')
-const publicPath = '../assets/'
+const distPath = path.join(__dirname, 'dist')
 const srcPath = __dirname
+
 module.exports = {
   name: 'client',
   entry: [
     './app.js'
   ],
   output: {
-    path: assetsPath,
-    filename: 'client-bundle.js',
-    publicPath: publicPath
+    path: distPath,
+    filename: '[name].[hash].bundle.js'
   },
-  watch: true,
   devtool: 'source-map',
+  devServer: {
+    outputPath: distPath,
+    contentBase: distPath,
+    historyApiFallback: true
+  },
   module: {
     loaders: [{
       test: /\.js$/,
@@ -38,6 +42,9 @@ module.exports = {
 
   plugins: [
     new ExtractTextPlugin('style.css', { allChunks: true }),
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin(),
+    new webpack.DefinePlugin({
+      CONFIG: JSON.stringify(config)
+    })
   ]
 }

@@ -3,7 +3,6 @@ const { getURIBase } = require('./couch')
 
 function createUser (username, password) {
   const uri = `${getURIBase()}/_users/org.couchdb.user:${username}`
-  console.log({ uri })
   return rp({
     uri,
     method: 'PUT',
@@ -24,11 +23,11 @@ function giveAccessToUser (username) {
     method: 'PUT',
     body: {
       admins: {
-        names: [],
-        roles: []
+        names: [username],
+        roles: ['_admin']
       },
       members: {
-        names: [username],
+        names: [],
         roles: []
       }
     },

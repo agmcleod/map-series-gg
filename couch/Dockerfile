@@ -1,3 +1,4 @@
-FROM klaemo/couchdb:2.0.0
+FROM apache/couchdb:2.1.1
 
 WORKDIR '/couch'
+# COPY local.ini /opt/couchdb/etc/

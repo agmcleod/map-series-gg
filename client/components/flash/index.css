@@ -1,0 +1,16 @@
+.success {
+  color: green;
+  background: lightgreen;
+  border: 1px solid green;
+}
+
+.error {
+  color: red;
+  background: #ffb4b4;
+  border: 1px solid red;
+}
+
+.success, .error {
+  padding: 15px;
+  text-align: center;
+}

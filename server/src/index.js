@@ -1,15 +1,27 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const logger = require('./logger')
 const rp = require('request-promise-native')
 const { getURIBase } = require('./couch')
+const cors = require('cors')
 const { createUser, giveAccessToUser } = require('./users')
 
 const app = express()
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const router = express.Router()
 
 router.post('/register', (req, res) => {
   const { username, password } = req.body
+  if (!username || !password) {
+    console.log(req.body)
+    res.status(400).json({
+      message: 'Must provide a username & password'
+    })
+    return
+  }
   const uri = `${getURIBase()}/${username}`
   rp(uri).then(() => {
     logger.info(`Username already taken: ${username}`)
@@ -40,17 +52,6 @@ router.post('/register', (req, res) => {
   })
 })
 
-// notes for setting up actual endpoints here
-
-/**
- * http://docs.couchdb.org/en/latest/intro/security.html
- * curl -X PUT http://localhost:5984/_users/org.couchdb.user:jan \
-     -H "Accept: application/json" \
-     -H "Content-Type: application/json" \
-     -d '{"name": "jan", "password": "apple", "roles": [], "type": "user"}'
- */
-
-app.use('*', require('body-parser').json())
 app.use('/', router)
 app.listen(8200, () => {
   console.log('Started express server')

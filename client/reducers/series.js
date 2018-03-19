@@ -1,6 +1,7 @@
 import uuid from 'node-uuid'
 import { push } from 'react-router-redux'
 import db, { indexName } from '../db'
+import { error } from './flash'
 
 const defaultState = {
   series: {},
@@ -63,7 +64,7 @@ export function newSeries (data) {
     return db.put(data).then(() => {
       dispatch({ type: NEW_SERIES, data })
       dispatch(push(`/series/${data._id}`))
-    }).catch((err) => console.error(err))
+    }).catch((err) => error(err.message)(dispatch))
   }
 }
 
@@ -73,7 +74,7 @@ export function saveSeries (data) {
     return db.put(data).then((res) => {
       data._rev = res._rev
       dispatch({ type: SAVE_SERIES, data })
-    }).catch((err) => console.error(err))
+    }).catch((err) => error(err.message)(dispatch))
   }
 }
 
