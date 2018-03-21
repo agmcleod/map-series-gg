@@ -141,7 +141,7 @@ class ViewSeries extends React.Component {
       <div>
         {this.props.succeeded ? this._renderSuccededNotice() : null}
         <h1>{series.name}</h1>
-        <p><Link to='/'>Back</Link></p>
+        <p><Link to='/series'>Back</Link></p>
         {this._renderBestOf()}
         <ul className={styles.list}>
           {this.state.seriesMaps.map((map, i) => {

@@ -7,6 +7,7 @@ const defaultState = {
 export default function loginReducer (state = defaultState, action) {
   switch (action.type) {
     case SET_CONNECTED:
+      console.log(`Set Connected: ${action.connected}`)
       return Object.assign({}, state, { connected: action.connected })
   }
 

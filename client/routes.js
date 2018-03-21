@@ -11,7 +11,7 @@ export default function (history) {
     <Router history={history}>
       <Route path='/login' component={Login} />
       <Route path='/' component={RequiresAuth}>
-        <Route path='/' component={SeriesList} />
+        <Route path='/series' root component={SeriesList} />
         <Route path='/series/:id' component={ViewSeries} />
       </Route>
     </Router>

@@ -15,16 +15,18 @@ export function connectToRemote (dispatch, username, password) {
   const remoteDb = new PouchDB(`${couchDb.protocol}${username}:${password}@${couchDb.url}/${username}`, { skip_setup: true })
   db.sync(remoteDb, { live: true, retry: true })
     .on('paused', () => {
-      console.log('paused')
+      // console.log('on pause')
+      setConnected(true)(dispatch)
+      setLoggedIn(username, password)(dispatch)
     })
     .on('denied', (err) => {
-      console.error('denied', err)
+      // console.error('denied', err)
       error(err.message)(dispatch)
       setConnected(false)(dispatch)
     })
     .on('active', () => {
       setConnected(true)(dispatch)
-      setLoggedIn(username, password)
+      setLoggedIn(username, password)(dispatch)
     })
     .on('error', (err) => {
       error(err.message)(dispatch)

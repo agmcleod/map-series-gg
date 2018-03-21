@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { register } from '../../reducers/login'
@@ -17,9 +18,15 @@ export class Login extends React.Component {
     }
   }
 
+  componentDidMount () {
+    if (this.props.loggedIn) {
+      this.props.push('/series')
+    }
+  }
+
   componentWillReceiveProps (nextProps) {
-    if (!this.props.loggedIn && nextProps.loggedIn) {
-      this.props.push('/')
+    if (nextProps.loggedIn) {
+      this.props.push('/series')
     }
   }
 
@@ -74,8 +81,14 @@ Login.propTypes = {
   register: PropTypes.func.isRequired
 }
 
+function mapPropsToDispatch (dispatch) {
+  const actions = bindActionCreators({ register, push }, dispatch)
+
+  return { ...actions, dispatch }
+}
+
 export default connect((state) => {
   return {
     loggedIn: state.loginReducer.loggedIn
   }
-}, { register, push })(Login)
+}, mapPropsToDispatch)(Login)

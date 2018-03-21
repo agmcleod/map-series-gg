@@ -1,7 +1,7 @@
 import 'core-js/es6/symbol'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware, combineReducers } from 'redux'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import { browserHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import { routerMiddleware, syncHistoryWithStore, routerReducer } from 'react-router-redux'
@@ -20,7 +20,10 @@ const store = createStore(combineReducers({
   flashReducer,
   pouchReducer,
   routing: routerReducer
-}), applyMiddleware(reduxThunk, routerMiddleware(browserHistory)))
+}), compose(
+  applyMiddleware(reduxThunk, routerMiddleware(browserHistory)),
+  window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+))
 
 const history = syncHistoryWithStore(browserHistory, store)
 

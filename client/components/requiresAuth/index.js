@@ -1,6 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import { push } from 'react-router-redux'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { connectToRemote } from '../../db'
 import { getCredentials } from '../../storage'
@@ -45,4 +46,10 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps, { push })(RequiresAuth)
+function mapPropsToDispatch (dispatch) {
+  const actions = bindActionCreators({ push }, dispatch)
+
+  return { ...actions, dispatch }
+}
+
+export default connect(mapStateToProps, mapPropsToDispatch)(RequiresAuth)

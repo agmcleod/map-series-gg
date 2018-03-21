@@ -55,7 +55,7 @@ export function setLoggedIn (username, password) {
   return (dispatch) => {
     setCredentials(username, password)
     dispatch({ type: SET_LOGGED_IN, loggedIn: true })
-    dispatch(push('/'))
+    // dispatch(push('/series'))
   }
 }
 
