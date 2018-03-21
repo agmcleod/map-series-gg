@@ -6,11 +6,6 @@ import { connectToRemote } from '../../db'
 import { getCredentials } from '../../storage'
 
 class RequiresAuth extends React.Component {
-  static propTypes = {
-    loggedIn: PropTypes.bool,
-    connected: PropTypes.bool
-  }
-
   componentDidMount () {
     if (!this.props.loggedIn) {
       return this.props.push('/login')
@@ -36,6 +31,11 @@ class RequiresAuth extends React.Component {
       return null
     }
   }
+}
+
+RequiresAuth.propTypes = {
+  loggedIn: PropTypes.bool,
+  connected: PropTypes.bool
 }
 
 function mapStateToProps (state) {

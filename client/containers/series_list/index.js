@@ -10,22 +10,6 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 class SeriesList extends React.Component {
-  static displayName = 'SeriesList'
-  static defaultProps = {
-    series: {},
-    isFetching: false
-  }
-
-  static propTypes = {
-    listSeries: PropTypes.func.isRequired,
-    series: PropTypes.object.isRequired,
-    isFetching: PropTypes.bool,
-  }
-
-  constructor (props) {
-    super(props)
-  }
-
   componentDidMount () {
     this.props.listSeries()
   }
@@ -50,6 +34,17 @@ class SeriesList extends React.Component {
       </div>
     )
   }
+}
+
+SeriesList.defaultProps = {
+  series: {},
+  isFetching: false
+}
+
+SeriesList.propTypes = {
+  listSeries: PropTypes.func.isRequired,
+  series: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool
 }
 
 export default connect((state) => {

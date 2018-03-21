@@ -1,11 +1,11 @@
 export function getCredentials () {
   return {
-    username: localStorage.username,
-    password: localStorage.password
+    username: window.localStorage.username,
+    password: window.localStorage.password
   }
 }
 
 export function setCredentials (username, password) {
-  localStorage.setItem('username', username)
-  localStorage.setItem('password', password)
+  window.localStorage.setItem('username', username)
+  window.localStorage.setItem('password', password)
 }

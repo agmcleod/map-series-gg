@@ -7,12 +7,6 @@ import { connect } from 'react-redux'
 import { newSeries } from '../../reducers/series'
 
 class NewSeries extends React.Component {
-  static displayName = 'NewSeries'
-
-  static propTypes = {
-    newSeries: PropTypes.func.isRequired
-  }
-
   constructor (props) {
     super(props)
     this.state = {
@@ -22,7 +16,7 @@ class NewSeries extends React.Component {
     this._createSeries = this._createSeries.bind(this)
   }
 
-  _createSeries(e) {
+  _createSeries (e) {
     e.preventDefault()
 
     const { name, seriesMaps } = this.state
@@ -38,7 +32,7 @@ class NewSeries extends React.Component {
     }
   }
 
-  _onFieldChange(e, propName) {
+  _onFieldChange (e, propName) {
     const nState = {
       name: this.state.name,
       seriesMaps: this.state.seriesMaps
@@ -52,7 +46,7 @@ class NewSeries extends React.Component {
     this.setState(nState)
   }
 
-  render() {
+  render () {
     return (
       <div>
         <h2>New Series</h2>
@@ -80,6 +74,10 @@ class NewSeries extends React.Component {
       </div>
     )
   }
+}
+
+NewSeries.propTypes = {
+  newSeries: PropTypes.func.isRequired
 }
 
 export default connect(null, { newSeries })(NewSeries)

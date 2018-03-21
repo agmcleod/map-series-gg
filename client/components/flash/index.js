@@ -5,12 +5,6 @@ import { connect } from 'react-redux'
 import { clearFlash } from '../../reducers/flash'
 
 class Flash extends React.Component {
-  static propTypes = {
-    clearFlash: PropTypes.func.isRequired,
-    message: PropTypes.string,
-    type: PropTypes.string
-  }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.message !== '') {
       if (this.hideTimeout) {
@@ -33,6 +27,12 @@ class Flash extends React.Component {
       <div className={type === 'success' ? styles.success : styles.error}>{message}</div>
     )
   }
+}
+
+Flash.propTypes = {
+  clearFlash: PropTypes.func.isRequired,
+  message: PropTypes.string,
+  type: PropTypes.string
 }
 
 export default connect((state) => {

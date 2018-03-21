@@ -8,18 +8,6 @@ import { Link } from 'react-router'
 import formStyle from '../../globalstyles/form.css'
 
 class ViewSeries extends React.Component {
-  static propTypes = {
-    listSeries: PropTypes.func.isRequired,
-    isFetching: PropTypes.bool,
-    series: PropTypes.object,
-    saveSeries: PropTypes.func.isRequired,
-    succeeded: PropTypes.bool,
-    unsetSucceeded: PropTypes.func.isRequired,
-    params: PropTypes.shape({ id: PropTypes.string })
-  }
-
-  static displayName = 'ViewSeries'
-
   constructor (props) {
     super(props)
 
@@ -175,6 +163,16 @@ class ViewSeries extends React.Component {
       </div>
     )
   }
+}
+
+ViewSeries.propTypes = {
+  listSeries: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
+  series: PropTypes.object,
+  saveSeries: PropTypes.func.isRequired,
+  succeeded: PropTypes.bool,
+  unsetSucceeded: PropTypes.func.isRequired,
+  params: PropTypes.shape({ id: PropTypes.string })
 }
 
 export default connect((state) => {

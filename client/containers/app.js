@@ -6,18 +6,11 @@ import Flash from '../components/flash'
 import { checkLogin } from '../reducers/login'
 
 export class App extends React.Component {
-  static displayName = 'App'
-  static propTypes = {
-    routes: PropTypes.object.isRequired,
-    loggedIn: PropTypes.bool,
-    checkLogin: PropTypes.func
-  }
-
   componentDidMount () {
     this.props.checkLogin()
   }
 
-  render() {
+  render () {
     return (
       <div className={appStyles.container}>
         <Flash />
@@ -25,6 +18,12 @@ export class App extends React.Component {
       </div>
     )
   }
+}
+
+App.propTypes = {
+  routes: PropTypes.object.isRequired,
+  loggedIn: PropTypes.bool,
+  checkLogin: PropTypes.func
 }
 
 export default connect((state, ownProps) => {
