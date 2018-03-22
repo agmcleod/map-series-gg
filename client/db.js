@@ -3,6 +3,7 @@ import PouchDB from 'pouchdb-browser'
 import { error } from './reducers/flash'
 import { setConnected } from './reducers/pouch'
 import { setLoggedIn, logout } from './reducers/login'
+import { listSeries } from './reducers/series'
 
 const db = new PouchDB('map-series-gg')
 export const indexName = 'index'
@@ -27,6 +28,10 @@ export function connectToRemote (dispatch, username, password) {
     .on('active', () => {
       setConnected(true)(dispatch)
       setLoggedIn(username, password)(dispatch)
+    })
+    .on('change', () => {
+      console.log('change')
+      listSeries()(dispatch)
     })
     .on('error', (err) => {
       error(err.message)(dispatch)

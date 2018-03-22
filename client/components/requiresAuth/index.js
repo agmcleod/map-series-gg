@@ -10,17 +10,20 @@ class RequiresAuth extends React.Component {
   componentDidMount () {
     if (!this.props.loggedIn) {
       return this.props.push('/login')
+    } else if (!this.props.connected) {
+      this.connect()
     }
   }
 
+  connect () {
+    const { username, password } = getCredentials()
+    connectToRemote(this.props.dispatch, username, password)
+  }
+
   componentWillReceiveProps (nextProps) {
-    const { loggedIn, push, connected } = this.props
+    const { loggedIn, push } = this.props
     if (!loggedIn || !nextProps.loggedIn) {
       return push('/login')
-    }
-    if (loggedIn && !connected) {
-      const { username, password } = getCredentials()
-      connectToRemote(this.props.dispatch, username, password)
     }
   }
 
