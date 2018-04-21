@@ -1,6 +1,6 @@
 import uuid from 'node-uuid'
 import { push } from 'react-router-redux'
-import db, { indexName } from '../db'
+import { getDb, indexName } from '../db'
 import { error } from './flash'
 
 const defaultState = {
@@ -40,7 +40,7 @@ export default function reducer (state = defaultState, action = {}) {
 export function listSeries () {
   return (dispatch) => {
     dispatch({ type: LOADING })
-    return db.query(`${indexName}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
+    return getDb().query(`${indexName}/by_resource`, { key: 'series', include_docs: true }).then((res) => {
       dispatch({ type: LIST_SERIES, data: res.rows })
     })
   }
@@ -61,7 +61,7 @@ export function newSeries (data) {
     })
 
     data.seriesMaps = seriesMaps
-    return db.put(data).then(() => {
+    return getDb().put(data).then(() => {
       dispatch({ type: NEW_SERIES, data })
       dispatch(push(`/series/${data._id}`))
     }).catch((err) => error(err.message)(dispatch))
@@ -71,7 +71,7 @@ export function newSeries (data) {
 export function saveSeries (data) {
   return (dispatch) => {
     dispatch({ type: LOADING })
-    return db.put(data).then((res) => {
+    return getDb().put(data).then((res) => {
       data._rev = res._rev
       dispatch({ type: SAVE_SERIES, data })
     }).catch((err) => error(err.message)(dispatch))

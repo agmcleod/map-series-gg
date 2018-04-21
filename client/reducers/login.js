@@ -2,6 +2,7 @@
 import { getCredentials, setCredentials } from '../storage'
 import { push } from 'react-router-redux'
 import { error, success } from './flash'
+import { getDb, initializeDb } from '../db'
 
 const SET_LOGGED_IN = Symbol('SET_LOGGED_IN')
 
@@ -53,9 +54,10 @@ export function register (username, password) {
 
 export function setLoggedIn (username, password) {
   return (dispatch) => {
+    console.log('set login creds')
     setCredentials(username, password)
     dispatch({ type: SET_LOGGED_IN, loggedIn: true })
-    // dispatch(push('/series'))
+    dispatch(push('/series'))
   }
 }
 
@@ -64,5 +66,8 @@ export function logout () {
     setCredentials('', '')
     dispatch({ type: SET_LOGGED_IN, loggedIn: false })
     dispatch(push('/login'))
+    getDb().destroy().then(() => {
+      initializeDb()
+    })
   }
 }

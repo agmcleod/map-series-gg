@@ -5,9 +5,36 @@ import { setConnected } from './reducers/pouch'
 import { setLoggedIn, logout } from './reducers/login'
 import { listSeries } from './reducers/series'
 
-const db = new PouchDB('map-series-gg')
+let db
 export const indexName = 'index'
 const { couch_db: couchDb } = CONFIG
+
+export function initializeDb () {
+  db = new PouchDB('map-series-gg')
+  const ddoc = {
+    _id: `_design/${indexName}`,
+    views: {
+      by_resource: {
+        map: function (doc) {
+          emit(doc.resource)
+        }.toString()
+      }
+    }
+  }
+  // save it
+  db.put(ddoc).catch(function (err) {
+    // view doc already created
+    if (err.name !== 'conflict') {
+      throw err
+    }
+  })
+}
+
+initializeDb()
+
+export function getDb () {
+  return db
+}
 
 // TODO: Need more complicated state management here. A disconnect for example shouldn't de-auth the user, but simply turn off connected state for UI reasons.
 
@@ -39,23 +66,3 @@ export function connectToRemote (dispatch, username, password) {
       logout()(dispatch)
     })
 }
-
-const ddoc = {
-  _id: `_design/${indexName}`,
-  views: {
-    by_resource: {
-      map: function (doc) {
-        emit(doc.resource)
-      }.toString()
-    }
-  }
-}
-// save it
-db.put(ddoc).catch(function (err) {
-  // view doc already created
-  if (err.name !== 'conflict') {
-    throw err
-  }
-})
-
-export default db
